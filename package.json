@@ -10,9 +10,11 @@
   "dependencies": {
     "express" : "latest",
     "react" : "latest",
+    "react-dom" : "latest",
     "gulp" : "latest",
     "gulp-typescript" : "latest",
     "gulp-nodeunit" : "latest",
+    "gulp-concat" : "latest",
     "browserify" : "latest",
     "reactify" : "latest",
     "vinyl-source-stream" : "latest"

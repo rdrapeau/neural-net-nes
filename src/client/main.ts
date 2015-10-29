@@ -5,9 +5,10 @@
 /// <reference path="../common/def/node.d.ts"/>
 
 var React: any = require('react');
+var ReactDOM: any = require('react-dom');
 var AppComponent: any = require('./component/AppComponent.jsx');
 
-React.render(
+ReactDOM.render(
     React.createElement(AppComponent),
     document.getElementById('content')
 );
