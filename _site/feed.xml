@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NES Neural Net</title>
+    <description>Project site and blog for CSE571
+</description>
+    <link>/</link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 29 Oct 2015 19:43:50 -0700</pubDate>
+    <lastBuildDate>Thu, 29 Oct 2015 19:43:50 -0700</lastBuildDate>
+    <generator>Jekyll v3.0.0</generator>
+    
+      <item>
+        <title>Hello World!</title>
+        <description>&lt;p&gt;Yay Javascript!&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;Hello, world!&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+</description>
+        <pubDate>Thu, 29 Oct 2015 14:44:40 -0700</pubDate>
+        <link>/hello/world/2015/10/29/hello-world.html</link>
+        <guid isPermaLink="true">/hello/world/2015/10/29/hello-world.html</guid>
+        
+        
+        <category>hello</category>
+        
+        <category>world</category>
+        
+      </item>
+    
+  </channel>
+</rss>
