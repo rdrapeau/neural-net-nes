@@ -1,6 +1,9 @@
 ### Mac ###
 .DS_Store
 
+### Sass ###
+.sass-cache/*
+
 ### Latex ###
 *.aux
 *.fdb_latexmk
