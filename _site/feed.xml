@@ -6,26 +6,9 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 04 Nov 2015 17:51:02 -0800</pubDate>
-    <lastBuildDate>Wed, 04 Nov 2015 17:51:02 -0800</lastBuildDate>
+    <pubDate>Wed, 04 Nov 2015 18:40:47 -0800</pubDate>
+    <lastBuildDate>Wed, 04 Nov 2015 18:40:47 -0800</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
-    
-      <item>
-        <title>Hello World!</title>
-        <description>&lt;p&gt;Yay Javascript!&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Hello, world!&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-</description>
-        <pubDate>Thu, 29 Oct 2015 14:44:40 -0700</pubDate>
-        <link>/hello/world/2015/10/29/hello-world.html</link>
-        <guid isPermaLink="true">/hello/world/2015/10/29/hello-world.html</guid>
-        
-        
-        <category>hello</category>
-        
-        <category>world</category>
-        
-      </item>
     
   </channel>
 </rss>

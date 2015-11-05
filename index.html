@@ -4,18 +4,17 @@ layout: default
 
 <div class="home">
 
-  <h1 class="page-heading">Posts</h1>
+  <h1 class="post-title">About</h1>
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+  <p>This blog will document our progress towards training a neural network to play simple NES games. </p>
 
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
+  <h2>Project Goals</h2>
+  <p>
+  For our project, we wish to train a neural network to play a NES game (such as Mario) using deep-Q learning or some variant on the NES memory (heuristics such as lexographic orderings in memory have proven useful for reinforcement across several games). We can experiment with hand engineering the features or simply point the inputs to the network to specific portions of memory. We would like to code this to run in the web browser, and have found a NES emulator online for this purpose. Improvements can be made at making our system more general to span several games or we can dig deeper to train a system that does extremely well in one specific game / area.
+  </p>
 
+  <p>This project is for the <a href="https://courses.cs.washington.edu/courses/cse571/15au/">CSE571: Probabilistic Robotics</a> course at the University of Washington.</p>
 </div>
+
+
+
