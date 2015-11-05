@@ -6,5 +6,8 @@ permalink: /about/
 
 This blog will document our progress towards training a neural network to play simple NES games. 
 
+**Project Goal:**
+For our project, we wish to train a neural network to play a NES game (such as Mario) using deep-Q learning or some variant on the NES memory (heuristics such as lexographic orderings in memory have proven useful for reinforcement across several games). We can experiment with hand engineering the features or simply point the inputs to the network to specific portions of memory. We would like to code this to run in the web browser, and have found a NES emulator online for this purpose. Improvements can be made at making our system more general to span several games or we can dig deeper to train a system that does extremely well in one specific game / area.
+
 This project is for the [CSE571: Probabilistic Robotics](https://courses.cs.washington.edu/courses/cse571/15au/) course at the University of Washington.
 
