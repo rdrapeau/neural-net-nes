@@ -45,6 +45,7 @@ var rotation = 0;
 var jump = -4.6;
 var frames = 0;
 var FPS = 60;
+var dead = true;
 
 var score = 0;
 var highscore = 0;
@@ -138,6 +139,7 @@ function startGame()
    }
 
    frames = 0;
+   dead = false;
 
    //start up our loops
    var updaterate = 1000.0 / FPS; //60 times a second
@@ -352,6 +354,7 @@ function setMedal()
 
 function playerDead()
 {
+   dead = true;
    //stop animating everything!
    $(".animated").css('animation-play-state', 'paused');
    $(".animated").css('-webkit-animation-play-state', 'paused');
@@ -515,7 +518,7 @@ module.exports = function(fps) {
          }
 
          return {
-            status : currentstate != states.SplashScreen,
+            status : !dead,
             birdY : position,
             frames : frames,
             pipeX : pipeLeft,
