@@ -1,3 +1,6 @@
+var convnetjs = require('./convnet-min');
+var cnnutil = require('./util');
+
 var deepqlearn = deepqlearn || { REVISION: 'ALPHA' };
 
 (function(global) {
