@@ -408,25 +408,13 @@ function showScore()
    soundSwoosh.stop();
    soundSwoosh.play();
    
-   //show the scoreboard
-   $("#scoreboard").css({ y: '40px', opacity: 0 }); //move it down so we can slide it up
-   $("#replay").css({ y: '40px', opacity: 0 });
-   $("#scoreboard").transition({ y: '0px', opacity: 1}, 600, 'ease', function() {
-      //When the animation is done, animate in the replay button and SWOOSH!
-      soundSwoosh.stop();
-      soundSwoosh.play();
-      $("#replay").transition({ y: '0px', opacity: 1}, 600, 'ease');
+   $("#scoreboard").transition({ y: '-40px', opacity: 0}, 1000, 'ease', function() {
+      //when that's done, display us back to nothing
+      $("#scoreboard").css("display", "none");
       
-      //also animate in the MEDAL! WOO!
-      if(wonmedal)
-      {
-         $("#medal").css({ scale: 2, opacity: 0 });
-         $("#medal").transition({ opacity: 1, scale: 1 }, 1200, 'ease');
-      }
+      //start the game over!
+      showSplash();
    });
-   
-   //make the replay button clickable
-   replayclickable = true;
 }
 
 $("#replay").click(function() {
