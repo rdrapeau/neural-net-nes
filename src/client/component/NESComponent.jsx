@@ -25,11 +25,13 @@ var NESComponent = React.createClass({
     loadROM: function() {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", 'rom/lifeforce.nes');
-        xhr.responseType = "arraybuffer";
+        xhr.responseType = "text";
 
+        var self = this;
         xhr.onload = function () {
             if (this.status === 200) {
-                this.nes.loadRom(xhr.response.toString());
+                self.nes.loadRom(xhr.responseText);
+                self.nes.start();
             }
         };
         xhr.send();
@@ -43,7 +45,7 @@ var NESComponent = React.createClass({
     },
 
     updateStatus: function(status) {
-        // Not important again
+        console.log(status);
     },
 
     writeAudio: function(samples) {
