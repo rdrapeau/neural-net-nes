@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "express" : "latest",
-    "convnetjs" : "latest",
     "react" : "latest",
     "react-dom" : "latest",
     "gulp" : "latest",
