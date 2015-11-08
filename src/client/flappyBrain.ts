@@ -2,8 +2,6 @@ var convnetjs = require('../vendor/convnetjs/convnet-min.js');
 var deepqlearn = require('../vendor/convnetjs/deepqlearn.js');
 var game = require('../vendor/flappy/main.js');
 
-
-
 class FlappyBrain {
 
     private onAction;
@@ -18,15 +16,16 @@ class FlappyBrain {
     constructor(onAction, onGetState, onStart, onTrainingEnd, frameRate) {
         this.onAction = onAction;
         this.onGetState = onGetState;
-        this.onStart= onStart;
+        this.onStart = onStart;
         this.onTrainingEnd = onTrainingEnd;
-        this.msPerFrame = 1 / frameRate * 1000;
+        this.msPerFrame = 1.0 / frameRate * 1000.0;
         this.brain = new deepqlearn.Brain(5, 2);
     }
 
     public train() {
         this.onStart()
         this.numIterations++;
+        console.log('Iteration:' + this.numIterations);
         this.update(this.onGetState());
     }
 
@@ -34,25 +33,24 @@ class FlappyBrain {
         console.log(gameState);
         if (gameState.status) {
             // Compute action
-            var action = this.brain.forward(gameState.data);
+            var action = this.brain.forward([gameState.birdY]);
             this.onAction(action);
 
             setTimeout(() => {
                 var gameState = this.onGetState();
 
                 // Compute the reward
-                var reward = 0;
-
+                var reward = 1 - gameState.birdY / 420.0;
+                console.log('Reward:' + reward);
                 this.brain.backward(reward);
                 this.update(gameState);
             }, this.msPerFrame * this.actionTime);
 
-        } else if (this.numIterations < 10) {
+        } else if (this.numIterations < 10000) {
             this.train();
         } else {
-        	this.onTrainingEnd();
+        	// this.onTrainingEnd();
             // Done training
-
         }
     }
 
