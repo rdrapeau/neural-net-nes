@@ -43,6 +43,9 @@ class FlappyBrain {
             }, 300);
         } else if (this.numIterations < 10) {
             this.train();
+        } else {
+            // Done training
+
         }
     }
 
@@ -50,7 +53,7 @@ class FlappyBrain {
 
     }
 
-    private saveBrain() {
+    public saveBrain() {
         localStorage.setItem('trained_brain', JSON.stringify(this.brain.value_net.toJSON()));
     }
 }
