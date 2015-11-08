@@ -15,8 +15,8 @@ var AppComponent = React.createClass({
         console.log(nesComponent);
     },
 
-    onLoadFlappyGame : function(component) {
-        this.brain = new FlappyBrain(this.onAction, this.onGetState, this.onStart);
+    onLoadFlappyGame : function(component, FPS) {
+        this.brain = new FlappyBrain(this.onAction, this.onGetState, this.onStart, FPS);
         this.currentGame = component;
 
         this.brain.train();

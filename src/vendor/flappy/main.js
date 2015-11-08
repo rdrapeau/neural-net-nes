@@ -44,6 +44,7 @@ var position = 180;
 var rotation = 0;
 var jump = -4.6;
 var frames = 0;
+var FPS = 60;
 
 var score = 0;
 var highscore = 0;
@@ -139,7 +140,7 @@ function startGame()
    frames = 0;
 
    //start up our loops
-   var updaterate = 1000.0 / 60.0 ; //60 times a second
+   var updaterate = 1000.0 / FPS; //60 times a second
    loopGameloop = setInterval(gameloop, updaterate);
    loopPipeloop = setInterval(updatePipes, 1400);
    
@@ -484,8 +485,8 @@ var isIncompatible = {
    }
 };
 
-module.exports = function(reactComp) {
-   parent = reactComp;
+module.exports = function(fps) {
+   FPS = fps;
    if(window.location.search == "?debug")
       debugmode = true;
    if(window.location.search == "?easy")

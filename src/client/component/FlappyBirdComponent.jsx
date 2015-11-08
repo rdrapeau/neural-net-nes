@@ -9,8 +9,9 @@ var FlappyBirdComponent = React.createClass({
     },
 
     componentDidMount : function() {
-        this.flappyBridge = FlappyStart();
-        this.props.onLoaded(this);
+        var FPS = 120;
+        this.flappyBridge = FlappyStart(FPS);
+        this.props.onLoaded(this, FPS);
     },
 
     onStart : function() {
