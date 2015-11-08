@@ -27,6 +27,7 @@ class FlappyBrain {
     }
 
     private update(gameState) {
+        console.log(gameState);
         if (gameState.status) {
             // Compute action
             var action = this.brain.forward(gameState.data);
@@ -34,7 +35,6 @@ class FlappyBrain {
 
             setTimeout(() => {
                 var gameState = this.onGetState();
-
                 // Compute the reward
                 var reward = 0;
 

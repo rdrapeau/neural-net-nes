@@ -2,16 +2,27 @@ var React = require('react');
 var FlappyStart = require('../../vendor/flappy/main');
 
 var FlappyBirdComponent = React.createClass({
+    flappyBridge : null,
+
     getInitialState : function() {
         return {};
     },
 
     componentDidMount : function() {
-        FlappyStart(this);
+        this.flappyBridge = FlappyStart();
+        this.props.onLoaded(this);
     },
 
-    onGameTick : function(gameState) {
-        console.log(gameState);
+    onStart : function() {
+        this.flappyBridge.onAction(1);
+    },
+
+    onAction : function(action) {
+        this.flappyBridge.onAction(action);
+    },
+
+    onGetState : function() {
+        return this.flappyBridge.onGetState();
     },
 
     render : function() {

@@ -43,6 +43,7 @@ var velocity = 0;
 var position = 180;
 var rotation = 0;
 var jump = -4.6;
+var frames = 0;
 
 var score = 0;
 var highscore = 0;
@@ -135,6 +136,8 @@ function startGame()
       $(".boundingbox").show();
    }
 
+   frames = 0;
+
    //start up our loops
    var updaterate = 1000.0 / 60.0 ; //60 times a second
    loopGameloop = setInterval(gameloop, updaterate);
@@ -154,6 +157,7 @@ function updatePlayer(player)
 }
 
 function gameloop() {
+   frames++;
    var player = $("#player");
    
    //update the player speed/position
@@ -494,4 +498,33 @@ module.exports = function(reactComp) {
    
    //start with the splash screen
    showSplash();
+
+
+   return {
+      onGetState : function() {
+         var nextpipe = pipes[0];
+         var pipeTop = 0;
+         var pipeLeft = 0;
+         if (nextpipe) {
+            var nextpipeupper = nextpipe.children(".pipe_upper");
+            
+            pipeTop = nextpipeupper.offset().top + nextpipeupper.height();
+            pipeLeft = nextpipeupper.offset().left - 2;
+         }
+
+         return {
+            status : currentstate != states.SplashScreen,
+            birdY : position,
+            frames : frames,
+            pipeX : pipeLeft,
+            pipeY : pipeTop
+         };
+      },
+
+      onAction : function(action) {
+         if (action == 1) {
+            screenClick();
+         }
+      }
+   };
 };
