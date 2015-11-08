@@ -19,7 +19,7 @@ var AppComponent = React.createClass({
         // <NESComponent onLoaded={this.onLoadNESGame} />
         return (
             <div id="app">
-                <FlappyBirdComponent />
+                <FlappyBirdComponent stateUpdateRate={60} />
             </div>
         );
 	}

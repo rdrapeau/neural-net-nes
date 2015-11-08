@@ -7,8 +7,11 @@ var FlappyBirdComponent = React.createClass({
     },
 
     componentDidMount : function() {
-        console.log(FlappyStart);
         FlappyStart(this);
+    },
+
+    onGameTick : function(gameState) {
+        console.log(gameState);
     },
 
     render : function() {

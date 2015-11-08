@@ -51,6 +51,8 @@ var pipeheight = 90;
 var pipewidth = 52;
 var pipes = new Array();
 
+var parent = null;
+
 var replayclickable = false;
 
 //sounds
@@ -428,11 +430,6 @@ function showScore()
 }
 
 $("#replay").click(function() {
-   //make sure we can only click once
-   if(!replayclickable)
-      return;
-   else
-      replayclickable = false;
    //SWOOSH!
    soundSwoosh.stop();
    soundSwoosh.play();
@@ -495,7 +492,8 @@ var isIncompatible = {
    }
 };
 
-module.exports = function() {
+module.exports = function(reactComp) {
+   parent = reactComp;
    if(window.location.search == "?debug")
       debugmode = true;
    if(window.location.search == "?easy")
