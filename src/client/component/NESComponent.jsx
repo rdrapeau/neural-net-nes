@@ -31,7 +31,7 @@ var NESComponent = React.createClass({
         xhr.onload = function () {
             if (this.status === 200) {
                 self.nes.loadRom(xhr.responseText);
-                self.nes.start();
+                // self.nes.start();
             }
         };
         xhr.send();
