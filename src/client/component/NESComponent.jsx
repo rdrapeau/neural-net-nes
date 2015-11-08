@@ -37,6 +37,8 @@ var NESComponent = React.createClass({
                 }
                 self.nes.loadRom(data);
                 self.nes.start();
+
+                self.props.onLoaded(self);
             }
         };
         xhr.send();
