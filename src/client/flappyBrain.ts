@@ -30,25 +30,25 @@ class FlappyBrain {
         console.log(gameState);
         if (gameState.status) {
             // Compute action
-            var action = this.brain.forward(gameState.data);
+            var action = this.brain.forward([gameState.birdY - gameState.pipeY, gameState.pipeX]);
             this.onAction(action);
 
             setTimeout(() => {
                 var gameState = this.onGetState();
 
-                var reward = 0;
+                var reward = gameState.frames;
                 if (!gameState.status) {
-                    reward = -1;
+                    reward = -1000;
                 } else if (gameState.pipeY) {
-                    var timeReward = gameState.frames / 300.0;
                     var distanceReward = 1.0 - Math.abs(gameState.pipeY - gameState.birdY) / 420.0;
-                    reward = timeReward + distanceReward;
+                    reward += distanceReward;
                 }
 
+                console.log(reward);
                 this.brain.backward(reward);
                 this.update(gameState);
             }, 300);
-        } else if (this.numIterations < 10) {
+        } else if (this.numIterations < 100) {
             this.train();
         } else {
             // Done training
