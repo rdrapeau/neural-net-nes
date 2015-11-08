@@ -21,7 +21,7 @@ class FlappyBrain {
     }
 
     public train() {
-        this.onStart()
+        this.onStart();
         this.numIterations++;
         this.update(this.onGetState());
     }
@@ -35,8 +35,15 @@ class FlappyBrain {
 
             setTimeout(() => {
                 var gameState = this.onGetState();
-                // Compute the reward
+
                 var reward = 0;
+                if (!gameState.status) {
+                    reward = -1;
+                } else if (gameState.pipeY) {
+                    var timeReward = gameState.frames / 300.0;
+                    var distanceReward = 1.0 - Math.abs(gameState.pipeY - gameState.birdY) / 420.0;
+                    reward = timeReward + distanceReward;
+                }
 
                 this.brain.backward(reward);
                 this.update(gameState);
