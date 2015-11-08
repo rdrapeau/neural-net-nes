@@ -20,10 +20,26 @@ var HEIGHT = 240;
 var NESComponent = React.createClass({
     canvasContext: null,
     canvasImageData: null,
+    nes: null,
 
+    loadROM: function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", 'rom/lifeforce.nes');
+        xhr.responseType = "arraybuffer";
+
+        xhr.onload = function () {
+            if (this.status === 200) {
+                this.nes.loadRom(xhr.response.toString());
+            }
+        };
+        xhr.send();
+    },
+    
     initNES: function(nes) {
         console.log(nes);
+        this.nes = nes;
         this.cls();
+        this.loadROM();
     },
 
     updateStatus: function(status) {
