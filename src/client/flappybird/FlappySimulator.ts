@@ -4,6 +4,8 @@ import Pipe = require('./Pipe');
 class FlappySimulator {
 	private started;
 
+	private frames;
+
 	private bird: Bird;
 	private pipes: Pipe[];
 
@@ -33,7 +35,8 @@ class FlappySimulator {
 				x: this.bird.x,
 				y: this.bird.y,
 				dy: this.bird.dy
-			}
+			},
+			frames : this.frames
 		} : null;
 	}
 
@@ -60,6 +63,8 @@ class FlappySimulator {
 			if (this.bird.update(this.pipes)) {
 				this.reset();
 			}
+
+			this.frames++;
 		}
 	}
 
@@ -68,6 +73,7 @@ class FlappySimulator {
 		this.started = false;
 		this.bird = null;
 		this.pipes = [];
+		this.frames = 0;
 	}
 
 	private start() {
