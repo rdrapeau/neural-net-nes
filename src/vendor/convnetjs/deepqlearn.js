@@ -188,6 +188,7 @@ var deepqlearn = deepqlearn || { REVISION: 'ALPHA' };
           this.epsilon = this.epsilon_test_time; // use test-time value
         }
         var rf = convnetjs.randf(0,1);
+        console.log("epsilon: " + this.epsilon);
         if(rf < this.epsilon) {
           // choose a random action with epsilon probability
           action = this.random_action();
@@ -195,6 +196,7 @@ var deepqlearn = deepqlearn || { REVISION: 'ALPHA' };
           // otherwise use our policy to make decision
           var maxact = this.policy(net_input);
           action = maxact.action;
+          console.log("POLICY ACTION " + action);
        }
       } else {
         // pathological case that happens first few iterations 

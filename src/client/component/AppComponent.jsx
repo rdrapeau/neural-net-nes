@@ -16,10 +16,10 @@ var AppComponent = React.createClass({
     },
 
     onLoadFlappyGame : function(component, FPS) {
-        // this.brain = new FlappyBrain(this.onAction, this.onGetState, this.onStart, this.onTrainingEnd, FPS);
+        this.brain = new FlappyBrain(this.onAction, this.onGetState, this.onStart, this.onTrainingEnd, FPS);
         this.currentGame = component;
 
-        // this.brain.train();
+        this.brain.train();
     },
 
     onStart : function() {

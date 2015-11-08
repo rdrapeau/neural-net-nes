@@ -26,6 +26,15 @@ class FlappyRenderer {
 		// Not started, no reason to render
 		if (!state) return;
 
+		// draw background
+		this.canvas.add(new fabric.Rect({
+			left: 0,
+			top: 0,
+			fill: 'cyan',
+			width: Constants.GAME_WIDTH,
+			height: Constants.GAME_HEIGHT
+		}));
+
 		// Draw flappy bird
 		this.canvas.add(new fabric.Rect({
 			left: state.bird.x,
