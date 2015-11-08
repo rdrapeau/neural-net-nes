@@ -45,7 +45,6 @@ class FlappyBrain {
             this.train();
         } else {
             // Done training
-
         }
     }
 
@@ -57,3 +56,5 @@ class FlappyBrain {
         localStorage.setItem('trained_brain', JSON.stringify(this.brain.value_net.toJSON()));
     }
 }
+
+export = FlappyBrain;
