@@ -31,6 +31,7 @@ class FlappyBrain {
     }
 
     private update(gameState) {
+        console.log(gameState);
         if (gameState.status) {
             // Compute action
             var action = this.brain.forward(gameState.data);
@@ -56,7 +57,6 @@ class FlappyBrain {
     }
 
     public test() {
-    	console.log("TEST");
     	this.brain.epsilon_test_time = 0.0; // don't make any more random choices
 		this.brain.learning = false;
 		this.onStart();
@@ -65,7 +65,6 @@ class FlappyBrain {
     }
 
     public performActionLoop(gameState) {
-    	console.log(gameState);
     	var action = this.brain.forward(gameState);
 		this.onAction(action);
 		if (gameState.status) {
@@ -80,3 +79,5 @@ class FlappyBrain {
         localStorage.setItem('trained_brain', JSON.stringify(this.brain.value_net.toJSON()));
     }
 }
+
+export = FlappyBrain;

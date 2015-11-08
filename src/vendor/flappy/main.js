@@ -144,7 +144,7 @@ function startGame()
    //start up our loops
    var updaterate = 1000.0 / FPS; //60 times a second
    loopGameloop = setInterval(gameloop, updaterate);
-   var pipeUpdateRate = (1400 / 60.0) * FPS;
+   var pipeUpdateRate = (1400.0) * (60.0 / FPS);
    loopPipeloop = setInterval(updatePipes, pipeUpdateRate);
    
    //jump from the start!
