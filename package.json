@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "express" : "latest",
+    "fabric-browserify" : "latest",
     "react" : "latest",
     "react-dom" : "latest",
     "gulp" : "latest",
