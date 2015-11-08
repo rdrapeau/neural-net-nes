@@ -16,7 +16,7 @@ var AppComponent = React.createClass({
     },
 
     onLoadFlappyGame : function(component, FPS) {
-        this.brain = new FlappyBrain(this.onAction, this.onGetState, this.onStart, FPS);
+        this.brain = new FlappyBrain(this.onAction, this.onGetState, this.onStart, this.onTrainingEnd, FPS);
         this.currentGame = component;
 
         this.brain.train();
@@ -32,6 +32,10 @@ var AppComponent = React.createClass({
 
     onGetState : function() {
         return this.currentGame.onGetState();
+    },
+
+    onTrainingEnd : function() {
+        this.brain.test();
     },
 
     render : function() {

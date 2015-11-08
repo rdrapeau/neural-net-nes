@@ -2,21 +2,25 @@ var convnetjs = require('../vendor/convnetjs/convnet-min.js');
 var deepqlearn = require('../vendor/convnetjs/deepqlearn.js');
 var game = require('../vendor/flappy/main.js');
 
-// brain.epsilon_test_time = 0.0; // don't make any more random choices
-// brain.learning = false;
+
 
 class FlappyBrain {
 
     private onAction;
     private onGetState;
     private onStart;
+    private onTrainingEnd;
     private brain;
+    private msPerFrame;
+    private actionTime = 18.2;
     private numIterations = 0;
 
-    constructor(onAction, onGetState, onStart) {
+    constructor(onAction, onGetState, onStart, onTrainingEnd, frameRate) {
         this.onAction = onAction;
         this.onGetState = onGetState;
         this.onStart= onStart;
+        this.onTrainingEnd = onTrainingEnd;
+        this.msPerFrame = 1 / frameRate * 1000;
         this.brain = new deepqlearn.Brain(5, 2);
     }
 
@@ -40,17 +44,36 @@ class FlappyBrain {
 
                 this.brain.backward(reward);
                 this.update(gameState);
-            }, 300);
+            }, this.msPerFrame * this.actionTime);
+
         } else if (this.numIterations < 10) {
             this.train();
         } else {
+        	this.onTrainingEnd();
             // Done training
 
         }
     }
 
     public test() {
+    	console.log("TEST");
+    	this.brain.epsilon_test_time = 0.0; // don't make any more random choices
+		this.brain.learning = false;
+		this.onStart();
+		var gameState = this.onGetState();
+		this.performActionLoop(this.onGetState());
+    }
 
+    public performActionLoop(gameState) {
+    	console.log(gameState);
+    	var action = this.brain.forward(gameState);
+		this.onAction(action);
+		if (gameState.status) {
+	    	setTimeout(() => {
+	            var gameState = this.onGetState();
+	            this.performActionLoop(gameState);
+	        }, this.msPerFrame * this.actionTime);
+    	}
     }
 
     public saveBrain() {
