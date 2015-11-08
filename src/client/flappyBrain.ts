@@ -41,13 +41,14 @@ class FlappyBrain {
                 var gameState = this.onGetState();
 
                 // Compute the reward
-                var reward = 0;
+                var reward = (1 - (gameState.birdY / 420.0));
+                console.log(reward);
 
                 this.brain.backward(reward);
                 this.update(gameState);
             }, this.msPerFrame * this.actionTime);
 
-        } else if (this.numIterations < 10) {
+        } else if (this.numIterations < 1000) {
             this.train();
         } else {
         	this.onTrainingEnd();
