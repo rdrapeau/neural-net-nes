@@ -1,22 +1,56 @@
-
 var convnetjs = require('../vendor/convnetjs/convnet-min.js');
 var deepqlearn = require('../vendor/convnetjs/deepqlearn.js');
+var game = require('../vendor/flappy/main.js');
 
-var brain = new deepqlearn.Brain(3, 2);
-var state = [Math.random(), Math.random(), Math.random()];
-for(var k=0;k<100;k++) {
-    var action = brain.forward(state); // returns index of chosen action
-    var reward = action === 0 ? 1.0 : 0.0;
-    brain.backward(reward); // <-- learning magic happens here
-    state[Math.floor(Math.random()*3)] += Math.random()*2-0.5;
+// brain.epsilon_test_time = 0.0; // don't make any more random choices
+// brain.learning = false;
+
+class FlappyBrain {
+
+    private onAction;
+    private onGetState;
+    private onStart;
+    private brain;
+    private numIterations = 0;
+
+    constructor(onAction, onGetState, onStart) {
+        this.onAction = onAction;
+        this.onGetState = onGetState;
+        this.onStart= onStart;
+        this.brain = new deepqlearn.Brain(5, 2);
+    }
+
+    public train() {
+        this.onStart()
+        this.numIterations++;
+        this.update(this.onGetState());
+    }
+
+    private update(gameState) {
+        if (gameState.status) {
+            // Compute action
+            var action = this.brain.forward(gameState.data);
+            this.onAction(action);
+
+            setTimeout(() => {
+                var gameState = this.onGetState();
+
+                // Compute the reward
+                var reward = 0;
+
+                this.brain.backward(reward);
+                this.update(gameState);
+            }, 300);
+        } else if (this.numIterations < 10) {
+            this.train();
+        }
+    }
+
+    public test() {
+
+    }
+
+    private saveBrain() {
+        localStorage.setItem('trained_brain', JSON.stringify(this.brain.value_net.toJSON()));
+    }
 }
-brain.epsilon_test_time = 0.0; // don't make any more random choices
-brain.learning = false;
-
-// get an optimal action from the learned policy
-for (var i=0; i <= 10; i++) {
-	var action = brain.forward([state[0] * i/10, state[1] * i/10, state[2] * i/10]);
-	console.log(action);
-}
-
-
