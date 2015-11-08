@@ -383,11 +383,9 @@ function playerDead()
    else
    {
       //play the hit sound (then the dead sound) and then show score
-      soundHit.play().bindOnce("ended", function() {
-         soundDie.play().bindOnce("ended", function() {
-            showScore();
-         });
-      });
+      soundHit.play()
+      soundDie.play()
+      showScore();
    }
 }
 
@@ -417,13 +415,7 @@ function showScore()
    soundSwoosh.stop();
    soundSwoosh.play();
    
-   $("#scoreboard").transition({ y: '-40px', opacity: 0}, 1000, 'ease', function() {
-      //when that's done, display us back to nothing
-      $("#scoreboard").css("display", "none");
-      
-      //start the game over!
-      showSplash();
-   });
+   showSplash();
 }
 
 $("#replay").click(function() {
