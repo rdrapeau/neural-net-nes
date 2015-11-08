@@ -21,37 +21,31 @@ class FlappyBrain {
     }
 
     public train() {
-        this.onStart();
+        this.onStart()
         this.numIterations++;
         this.update(this.onGetState());
     }
 
     private update(gameState) {
-        console.log(gameState);
         if (gameState.status) {
             // Compute action
-            var action = this.brain.forward([gameState.birdY - gameState.pipeY, gameState.pipeX]);
+            var action = this.brain.forward(gameState.data);
             this.onAction(action);
 
             setTimeout(() => {
                 var gameState = this.onGetState();
 
-                var reward = gameState.frames;
-                if (!gameState.status) {
-                    reward = -1000;
-                } else if (gameState.pipeY) {
-                    var distanceReward = 1.0 - Math.abs(gameState.pipeY - gameState.birdY) / 420.0;
-                    reward += distanceReward;
-                }
+                // Compute the reward
+                var reward = 0;
 
-                console.log(reward);
                 this.brain.backward(reward);
                 this.update(gameState);
             }, 300);
-        } else if (this.numIterations < 100) {
+        } else if (this.numIterations < 10) {
             this.train();
         } else {
             // Done training
+
         }
     }
 
@@ -63,5 +57,3 @@ class FlappyBrain {
         localStorage.setItem('trained_brain', JSON.stringify(this.brain.value_net.toJSON()));
     }
 }
-
-export = FlappyBrain;
