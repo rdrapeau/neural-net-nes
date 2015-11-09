@@ -23,13 +23,19 @@ var AppComponent = React.createClass({
         this.brain.test();
     },
 
+    // return the deepqlearn brain for display
+    getBrain : function() {
+        return this.brain.brain;
+    },
+
     render : function() {
         return (
             <div id="app">
                 <FlappyComponent
                     onLoaded={this.onLoaded}
                     onTrainTick={this.onTrainTick}
-                    onTestTick={this.onTestTick} />
+                    onTestTick={this.onTestTick} 
+                    getBrain={this.getBrain} />
             </div>
         );
 	}
