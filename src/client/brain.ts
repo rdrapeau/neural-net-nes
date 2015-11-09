@@ -67,7 +67,7 @@ class Brain {
     }
 
     private setupForTrain() {
-        this.brain.epsilon_test_time = this.oldEpsilonTestTime; // Don't make any more random choices
+        this.brain.epsilon_test_time = this.oldEpsilonTestTime;
         this.brain.learning = true;
     }
 
