@@ -5,7 +5,7 @@ var FlappyRenderer = require('../flappybird/FlappyRenderer');
 var FlappyAdapter = require('../adapter/FlappyAdapter');
 
 var RENDER_FPS = 60.0;
-var FRAMES_PER_TICK = 18;
+var FRAMES_PER_TICK = 12;
 
 var FlappyComponent = React.createClass({
     flappySimulator : null,
