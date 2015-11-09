@@ -30,7 +30,7 @@ class Brain {
         }
 
         // Check if there is a previous state to get a reward for
-        if (this.previousState && this.previousAction) {
+        if (this.previousState !== null && this.previousAction !== null) {
             var reward = this.adapter.getReward(this.previousState, this.previousAction, gameState);
             this.brain.backward(reward);
         }

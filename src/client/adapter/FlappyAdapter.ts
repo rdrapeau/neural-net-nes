@@ -18,10 +18,14 @@ class FlappyAdapter {
     }
 
     public getGameState() {
-        return this.sim.onGetState();
+        // return this.sim.onGetState();
+        return {
+            features: [1]
+        };
     }
 
     public getReward(gameState, action, newState) {
+        console.log(action);
         // Returns the reward given the game state, the action performed, and the new state
         return action ? 1 : -1;
     }
