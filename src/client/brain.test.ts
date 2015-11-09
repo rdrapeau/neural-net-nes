@@ -85,17 +85,29 @@ class BrainTest {
         test.done();
     }
 
+    public static testTestNullGameState(test) {
+        BrainTest.adapter.gameState = null;
+        var returnValue = BrainTest.brain.test();
+
+        test.ok(
+            !returnValue,
+            'test should return false if the gameState is null'
+            );
+
+        test.done();
+    }
+
     public static testTrainSimpleModel(test) {
         BrainTest.adapter.numIterations = 4000;
         BrainTest.adapter.gameState = {status : true, features : [0]};
-        runTraining(test, 2000, 0.1, 1);
+        runTraining(test, 1000, 0.1, 1);
         test.done();
     }
 
     public static testTrainRandomModel(test) {
-        BrainTest.adapter.numIterations = 7000;
+        BrainTest.adapter.numIterations = 4000;
         BrainTest.adapter.gameState = { status: true, features: [Math.random()] };
-        runTraining(test, 2000, 0.1, 1);
+        runTraining(test, 1000, 0.1, 1);
         test.done();
     }
 }
