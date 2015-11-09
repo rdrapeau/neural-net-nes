@@ -15,14 +15,21 @@ var AppComponent = React.createClass({
         this.brain = new Brain(component.getBrainAdapter());
     },
 
-    onTick : function() {
+    onTrainTick : function() {
         this.brain.train();
+    },
+
+    onTestTick : function() {
+        this.brain.test();
     },
 
     render : function() {
         return (
             <div id="app">
-                <FlappyComponent onLoaded={this.onLoaded} onTick={this.onTick} />
+                <FlappyComponent
+                    onLoaded={this.onLoaded}
+                    onTrainTick={this.onTrainTick}
+                    onTestTick={this.onTestTick} />
             </div>
         );
 	}

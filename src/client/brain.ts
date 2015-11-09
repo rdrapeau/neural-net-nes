@@ -24,8 +24,8 @@ class Brain {
             var gameState = this.adapter.getGameState();
 
             // Check if there is a previous state to get a reward for
-            if (previousState || previousAction) {
-                var reward = this.adapter.getReward(previousState, previousAction, gameState);
+            if (this.previousState || this.previousAction) {
+                var reward = this.adapter.getReward(this.previousState, this.previousAction, gameState);
                 this.brain.backward(reward);
             }
 
@@ -61,7 +61,7 @@ class Brain {
     }
 
     public getBrainJSON() {
-        return this.brain.value_net.toJSON());
+        return this.brain.value_net.toJSON();
     }
 }
 

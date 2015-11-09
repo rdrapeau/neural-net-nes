@@ -68,6 +68,10 @@ class FlappySimulator {
 		}
 	}
 
+	public isRunning() {
+		return this.started;
+	}
+
 	private reset() {
 		// Garbage collector will get the bird and pipes
 		this.started = false;

@@ -11,6 +11,7 @@ var FlappyComponent = React.createClass({
     flappyRenderer : null,
     flappyAdapter : null,
     frameCount : 0,
+    trainingDone : false,
 
     getInitialState : function() {
         return {
@@ -26,7 +27,9 @@ var FlappyComponent = React.createClass({
     componentDidMount : function() {
         this.flappySimulator = new FlappySimulator();
         this.flappyRenderer = new FlappyRenderer(this.flappySimulator, "flappyCanvas");
-        this.flappyAdapter = new FlappyAdapter(this.flappySimulator);
+        this.flappyAdapter = new FlappyAdapter(this.flappySimulator, () => {
+            this.trainingDone = true;
+        });
 
         this.props.onLoaded(this);
 
@@ -55,9 +58,14 @@ var FlappyComponent = React.createClass({
         }
 
         // Update the parent ticker
-        frameCount++;
-        if (frameCount > FRAMES_PER_TICK) {
-            this.props.onTick();
+        this.frameCount++;
+        if (this.frameCount > FRAMES_PER_TICK) {
+            if (this.trainingDone) {
+                this.props.onTrainTick();
+            } else {
+                this.props.onTestTick();
+            }
+            this.frameCount = 0;
         }
 
         var timePerFrame = (1 / this.state.fps) * 1000.0;
