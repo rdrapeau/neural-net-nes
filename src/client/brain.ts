@@ -48,27 +48,11 @@ class Brain {
         this.previousAction = null;
     }
 
-    public test(onDoneTest) {
+    public test() {
         this.setupForTest();
-        this.adapter.onGameStart();
-        var initState = this.adapter.getGameState();
-        this.testUpdate(initState, onDoneTest);
-    }
-
-    private testUpdate(gameState, onDoneTest) {
-        if (gameState.status) { // Alive
-            // Perform the predicted action
-            var action = this.brain.forward(gameState.features);
-            this.adapter.onAction(action);
-
-            setTimeout(() => {
-                // Get the state from performing the action and update again
-                var newState = this.adapter.getGameState();
-                this.testUpdate(newState, onDoneTest);
-            }, this.adapter.waitTime);
-        } else { // Dead - Game is over
-            onDoneTest();
-        }
+        var gameState = this.adapter.getGameState();
+        var action = this.brain.forward(gameState.features);
+        this.adapter.onAction(action);
     }
 
     private setupForTest() {
