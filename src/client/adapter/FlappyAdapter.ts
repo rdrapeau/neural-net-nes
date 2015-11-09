@@ -1,5 +1,8 @@
 import FlappySimulator = require('../flappybird/FlappySimulator');
 
+import Bird = require('../flappybird/Bird');
+import Constants = require('../flappybird/Constants');
+
 class FlappyAdapter {
     public stateSize = 2; // Size of the state vector passed to the NN
     public numActions = 2; // Number of possible actions from the NN
@@ -20,7 +23,10 @@ class FlappyAdapter {
         var state = this.sim.onGetState();
         var bird = state.bird;
         var pipe = state.pipes[0];
-        state['features'] = [Math.abs(pipe.x - bird.x), bird.y - pipe.y];
+        state['features'] = [
+            Math.abs(pipe.x - bird.x) / Constants.GAME_WIDTH,
+            Math.abs(bird.y - (Bird.BIRD_HEIGHT / 2) - pipe.y) / Constants.GAME_HEIGHT
+        ];
 
         return state;
     }
@@ -28,10 +34,10 @@ class FlappyAdapter {
     public getReward(gameState, action, newState) {
         // Returns the reward given the game state, the action performed, and the new state
         if (newState.dead) {
-            return -1000;
+            return -1;
         }
 
-        return 1;
+        return 0.001;
     }
 
     public onAction(action) {
