@@ -55,6 +55,10 @@ class Brain {
     public test() {
         this.setupForTest();
         var gameState = this.adapter.getGameState();
+        if (!gameState) {
+            return;
+        }
+
         var action = this.brain.forward(gameState.features);
         this.adapter.onAction(action);
     }
