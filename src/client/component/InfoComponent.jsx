@@ -5,7 +5,7 @@ var InfoComponent = React.createClass({
         if (this.props.brain == null) {
             return null;
         } else {
-            var brain = this.props.brain;
+            var brain = this.props.brain.brain;
             return (
                 <div>
                     <div>Exploration Epsilon: {brain.epsilon}</div>
@@ -17,9 +17,19 @@ var InfoComponent = React.createClass({
             );
         }
     },
+
+    printBrain : function() {
+        if (this.props.brain) {
+            console.log(
+                JSON.stringify(this.props.brain.getBrainJSON()
+            ));
+        }
+    },
+
     render : function() {
         return (
             <div ref="vis">
+                <button onClick={this.printBrain}>Print Brain</button>
                 <div>Tick: {this.props.testTickCount}</div>
                 {this.brainDump()}
             </div>
