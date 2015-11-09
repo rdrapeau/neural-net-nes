@@ -17,6 +17,8 @@ var FlappyComponent = React.createClass({
     getInitialState : function() {
         return {
             renderEnabled : true,
+            iterationCount : 0,
+            gameCount : 0,
             fps : RENDER_FPS
         };
     },
@@ -49,6 +51,7 @@ var FlappyComponent = React.createClass({
         if (!this.flappySimulator.isRunning()) {
             this.frameCount = 0;
             this.flappyAdapter.onGameStart();
+            this.setState({gameCount : this.state.gameCount + 1});
         }
 
         // Update the simulation
@@ -68,6 +71,7 @@ var FlappyComponent = React.createClass({
                 this.props.onTrainTick();
             }
             this.frameCount = 0;
+            this.setState({iterationCount : this.state.iterationCount + 1});
         }
 
         var timePerFrame = (1 / this.state.fps) * 1000.0;
@@ -88,6 +92,8 @@ var FlappyComponent = React.createClass({
                 <button onClick={this.toggleRender}>
                     {this.state.renderEnabled ? "Rendering: On" : "Rendering: Off"}
                 </button>
+                <p>Number of iterations: {this.state.iterationCount}</p>
+                <p>Number of Games: {this.state.gameCount}</p>
                 <canvas id="flappyCanvas" width={"" + Constants.GAME_WIDTH} height={"" + Constants.GAME_HEIGHT} />
             </div>
         );
