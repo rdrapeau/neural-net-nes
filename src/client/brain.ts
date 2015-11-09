@@ -10,13 +10,19 @@ class Brain {
     private previousState;
     private previousAction;
 
+    // Used for switching back and forth between testing and training
+    private oldEpsilonTestTime;
+
     constructor(gameAdapter) {
         this.brain = new deepqlearn.Brain(gameAdapter.stateSize, gameAdapter.numActions);
         this.adapter = gameAdapter;
         this.adapter.brain = this;
+
+        this.oldEpsilonTestTime = this.brain.epsilon_test_time;
     }
 
     public train() {
+        this.setupForTrain();
         var gameState = this.adapter.getGameState();
         if (!gameState) {
             // GameState is null
@@ -58,6 +64,11 @@ class Brain {
     private setupForTest() {
         this.brain.epsilon_test_time = 0.0; // Don't make any more random choices
         this.brain.learning = false;
+    }
+
+    private setupForTrain() {
+        this.brain.epsilon_test_time = this.oldEpsilonTestTime; // Don't make any more random choices
+        this.brain.learning = true;
     }
 
     public getBrainJSON() {
