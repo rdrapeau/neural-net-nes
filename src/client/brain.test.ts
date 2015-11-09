@@ -34,8 +34,8 @@ class TestAdapter {
 
 class BrainTest {
 
-    private static brain;
-    private static adapter;
+    public static brain;
+    public static adapter;
 
     public static setUp(callback) {
         BrainTest.adapter = new TestAdapter();
@@ -86,42 +86,50 @@ class BrainTest {
     }
 
     public static testTrainSimpleModel(test) {
-        BrainTest.adapter.numIterations = 3500;
+        BrainTest.adapter.numIterations = 4000;
         BrainTest.adapter.gameState = {status : true, features : [0]};
-        for (var i = 0; i < BrainTest.adapter.numIterations; i++) {
-            BrainTest.brain.train();
-        }
-
-        BrainTest.adapter.actions = [];
-        for (var i = 0; i < 1000; i++) {
-            BrainTest.brain.test();
-        }
-
-        var sum = BrainTest.adapter.actions.reduce(function(a, b) { return a + b; });
-        var mean = sum / 1000.0;
-
-        var squaredResidualSum = BrainTest.adapter.actions.map(function(a) {
-            return Math.pow(a - mean, 2);
-        }).reduce(function(a, b) {
-            return a + b;
-        });
-
-        var variance = squaredResidualSum / 1000.0;
-        var espilon = 0.1;
-
-        test.ok(
-            mean + espilon >= 1.0 && mean - espilon <= 1.0,
-            'Mean should be very close to 1'
-        );
-
-
-        test.ok(
-            variance + espilon >= 0.0 && variance - espilon <= 0.0,
-            'Variance should be very close to 0'
-        );
-
+        runTraining(test, 2000, 0.1, 1);
         test.done();
     }
+
+    public static testTrainRandomModel(test) {
+        BrainTest.adapter.numIterations = 7000;
+        BrainTest.adapter.gameState = { status: true, features: [Math.random()] };
+        runTraining(test, 2000, 0.1, 1);
+        test.done();
+    }
+}
+
+function runTraining(test, numTestIterations, precision, targetMean) {
+    for (var i = 0; i < BrainTest.adapter.numIterations; i++) {
+        BrainTest.brain.train();
+    }
+
+    BrainTest.adapter.actions = [];
+    for (var i = 0; i < numTestIterations; i++) {
+        BrainTest.brain.test();
+    }
+
+    var sum = BrainTest.adapter.actions.reduce(function(a, b) { return a + b; });
+    var mean = sum / numTestIterations;
+
+    var squaredResidualSum = BrainTest.adapter.actions.map(function(a) {
+        return Math.pow(a - mean, 2);
+    }).reduce(function(a, b) { return a + b; });
+
+    var variance = squaredResidualSum / numTestIterations;
+    console.log(mean);
+    console.log(variance);
+    test.ok(
+        mean + precision >= targetMean && mean - precision <= targetMean,
+        'Mean should be very close to ' + targetMean
+        );
+
+
+    test.ok(
+        variance + precision >= 0.0 && variance - precision <= 0.0,
+        'Variance should be very close to 0'
+        );
 }
 
 export = BrainTest;
