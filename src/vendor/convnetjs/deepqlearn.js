@@ -196,7 +196,7 @@ var deepqlearn = deepqlearn || { REVISION: 'ALPHA' };
           // otherwise use our policy to make decision
           var maxact = this.policy(net_input);
           action = maxact.action;
-          console.log("POLICY ACTION " + action);
+          // console.log("POLICY ACTION " + action);
        }
       } else {
         // pathological case that happens first few iterations
