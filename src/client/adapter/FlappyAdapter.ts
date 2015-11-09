@@ -34,7 +34,7 @@ class FlappyAdapter {
     }
 
     public onDoneTrain(json) {
-        console.log(json);
+        console.log(JSON.stringify(json));
         this.onTrainingDone();
     }
 }
