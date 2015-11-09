@@ -4,8 +4,6 @@ var FlappySimulator = require('../flappybird/FlappySimulator');
 var FlappyRenderer = require('../flappybird/FlappyRenderer');
 var FlappyAdapter = require('../adapter/FlappyAdapter');
 
-var InfoComponent = require('./InfoComponent.jsx');
-
 var RENDER_FPS = 60.0;
 var FRAMES_PER_TICK = 18;
 
@@ -37,7 +35,6 @@ var FlappyComponent = React.createClass({
         });
 
         this.props.onLoaded(this);
-        this.brain = this.props.getBrain();
 
         // Start game loop
         this.loop();
@@ -97,13 +94,10 @@ var FlappyComponent = React.createClass({
     render : function() {
         return (
             <div ref="flappyBird">
+                <div>Game: {this.state.gameCount}</div>
                 <button onClick={this.toggleRender}>
                     {this.state.renderEnabled ? "Rendering: On" : "Rendering: Off"}
                 </button>
-                <InfoComponent 
-                    iterationCount={this.state.iterationCount} 
-                    gameCount={this.state.gameCount} 
-                    brain={this.brain} />
                 <canvas id="flappyCanvas" width={"" + Constants.GAME_WIDTH} height={"" + Constants.GAME_HEIGHT} />
             </div>
         );

@@ -20,8 +20,7 @@ var InfoComponent = React.createClass({
     render : function() {
         return (
             <div ref="vis">
-                <div>Iteration: {this.props.iterationCount}</div>
-                <div>Game: {this.props.gameCount}</div>
+                <div>Tick: {this.props.testTickCount}</div>
                 {this.brainDump()}
             </div>
         );
