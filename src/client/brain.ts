@@ -71,6 +71,10 @@ class Brain {
     public getBrainJSON() {
         return this.brain.value_net.toJSON();
     }
+
+    public loadBrain(brainJSON) {
+        this.brain.value_net.fromJSON(brainJSON);
+    }
 }
 
 export = Brain;
