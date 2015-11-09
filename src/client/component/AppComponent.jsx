@@ -1,6 +1,7 @@
 var React = require('react');
 var NESComponent = require('./NESComponent.jsx');
 var FlappyComponent = require('./FlappyComponent.jsx');
+var InfoComponent = require('./InfoComponent.jsx');
 var Brain = require('../brain');
 
 var AppComponent = React.createClass({
@@ -8,7 +9,9 @@ var AppComponent = React.createClass({
     currentGame : null,
 
     getInitialState : function() {
-        return {};
+        return {
+            testTickCount: 0,
+        };
     },
 
     onLoaded : function(component) {
@@ -17,25 +20,23 @@ var AppComponent = React.createClass({
 
     onTrainTick : function() {
         this.brain.train();
+        this.setState({testTickCount : this.state.testTickCount + 1});
     },
 
     onTestTick : function() {
         this.brain.test();
     },
 
-    // return the deepqlearn brain for display
-    getBrain : function() {
-        return this.brain.brain;
-    },
-
     render : function() {
         return (
             <div id="app">
+                <InfoComponent
+                    brain={this.brain} 
+                    testTickCount={this.state.testTickCount} />
                 <FlappyComponent
                     onLoaded={this.onLoaded}
                     onTrainTick={this.onTrainTick}
-                    onTestTick={this.onTestTick} 
-                    getBrain={this.getBrain} />
+                    onTestTick={this.onTestTick}  />
             </div>
         );
 	}
