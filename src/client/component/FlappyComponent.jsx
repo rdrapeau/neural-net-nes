@@ -71,11 +71,13 @@ var FlappyComponent = React.createClass({
         // Update the parent ticker
         this.frameCount++;
         if (this.frameCount > FRAMES_PER_TICK) {
-            if (this.trainingDone) {
-                this.props.onTestTick();
-            } else {
-                this.props.onTrainTick();
-                this.setState({iterationCount : this.state.iterationCount + 1});
+            if (this.flappySimulator.isRunning()) {
+                if (this.trainingDone) {
+                    this.props.onTestTick();
+                } else {
+                    this.props.onTrainTick();
+                    this.setState({iterationCount : this.state.iterationCount + 1});
+                }
             }
             this.frameCount = 0;
         }
