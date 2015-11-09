@@ -6,13 +6,11 @@ class FlappyAdapter {
     public waitTime = 0; // Time in ms to wait after performing an action to get the next state
     public numIterations = 10000; // Number of training samples to use before stopping (not games)
     public brain = null; // a reference to the brain
-    public onTrainingDone; // A function to call when the brain is done training and wants to test
 
     private sim: FlappySimulator;
 
-    constructor(simulation: FlappySimulator, onTrainingDone) {
+    constructor(simulation: FlappySimulator) {
         this.sim = simulation;
-        this.onTrainingDone = onTrainingDone;
     }
 
     public onGameStart() {
@@ -31,11 +29,6 @@ class FlappyAdapter {
 
     public onAction(action) {
         this.sim.onAction(action);
-    }
-
-    public onDoneTrain(json) {
-        console.log(JSON.stringify(json));
-        this.onTrainingDone();
     }
 }
 

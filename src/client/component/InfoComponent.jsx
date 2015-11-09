@@ -30,7 +30,7 @@ var InfoComponent = React.createClass({
         return (
             <div ref="vis">
                 <button onClick={this.printBrain}>Print Brain</button>
-                <div>Tick: {this.props.testTickCount}</div>
+                <div>Training Iterations: {this.props.trainTickCount}</div>
                 {this.brainDump()}
             </div>
         );

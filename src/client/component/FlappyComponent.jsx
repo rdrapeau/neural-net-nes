@@ -12,12 +12,10 @@ var FlappyComponent = React.createClass({
     flappyRenderer : null,
     flappyAdapter : null,
     frameCount : 0,
-    trainingDone : false,
 
     getInitialState : function() {
         return {
             renderEnabled : true,
-            iterationCount : 0,
             gameCount : 0,
             fps : RENDER_FPS,
         };
@@ -30,9 +28,7 @@ var FlappyComponent = React.createClass({
     componentDidMount : function() {
         this.flappySimulator = new FlappySimulator();
         this.flappyRenderer = new FlappyRenderer(this.flappySimulator, "flappyCanvas");
-        this.flappyAdapter = new FlappyAdapter(this.flappySimulator, () => {
-            this.trainingDone = true;
-        });
+        this.flappyAdapter = new FlappyAdapter(this.flappySimulator);
 
         this.props.onLoaded(this);
 
@@ -52,9 +48,7 @@ var FlappyComponent = React.createClass({
             this.frameCount = 0;
             this.flappyAdapter.onGameStart();
 
-            if (!this.trainingDone) {
-                this.setState({gameCount : this.state.gameCount + 1});
-            }
+            this.setState({gameCount : this.state.gameCount + 1});
         }
 
         // Update the simulation
@@ -69,12 +63,7 @@ var FlappyComponent = React.createClass({
         this.frameCount++;
         if (this.frameCount > FRAMES_PER_TICK) {
             if (this.flappySimulator.isRunning()) {
-                if (this.trainingDone) {
-                    this.props.onTestTick();
-                } else {
-                    this.props.onTrainTick();
-                    this.setState({iterationCount : this.state.iterationCount + 1});
-                }
+                this.props.onTick();
             }
             this.frameCount = 0;
         }
@@ -94,7 +83,6 @@ var FlappyComponent = React.createClass({
     render : function() {
         return (
             <div ref="flappyBird">
-                <div>Game: {this.state.gameCount}</div>
                 <button onClick={this.toggleRender}>
                     {this.state.renderEnabled ? "Rendering: On" : "Rendering: Off"}
                 </button>

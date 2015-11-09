@@ -10,7 +10,8 @@ var AppComponent = React.createClass({
 
     getInitialState : function() {
         return {
-            testTickCount: 0,
+            trainTickCount: 0,
+            isTraining: true,
         };
     },
 
@@ -18,25 +19,29 @@ var AppComponent = React.createClass({
         this.brain = new Brain(component.getBrainAdapter());
     },
 
-    onTrainTick : function() {
-        this.brain.train();
-        this.setState({testTickCount : this.state.testTickCount + 1});
+    onTick : function() {
+        if (this.state.isTraining) {
+            this.brain.train();
+            this.setState({trainTickCount : this.state.trainTickCount + 1});
+        } else {
+            this.brain.test();
+        }
     },
 
-    onTestTick : function() {
-        this.brain.test();
+    toggleTrain : function() {
+        this.setState({isTraining : !this.state.isTraining});
     },
 
     render : function() {
         return (
             <div id="app">
+                <button onClick={this.toggleTrain}>Mode: {this.state.isTraining ? "Train" : "Test"}</button>
                 <InfoComponent
                     brain={this.brain} 
-                    testTickCount={this.state.testTickCount} />
+                    trainTickCount={this.state.trainTickCount} />
                 <FlappyComponent
                     onLoaded={this.onLoaded}
-                    onTrainTick={this.onTrainTick}
-                    onTestTick={this.onTestTick}  />
+                    onTick={this.onTick} />
             </div>
         );
 	}
