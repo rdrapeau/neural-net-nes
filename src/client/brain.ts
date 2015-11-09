@@ -7,42 +7,45 @@ class Brain {
     private adapter;
     private remainingIterations;
 
+    // Previous state info for calculating rewards
+    private previousState;
+    private previousAction;
+
     constructor(gameAdapter) {
         this.brain = new deepqlearn.Brain(gameAdapter.stateSize, gameAdapter.numActions);
         this.remainingIterations = gameAdapter.numIterations;
         this.adapter = gameAdapter;
+        this.adapter.brain = this;
     }
 
-    public train(onDoneTrain) {
-        this.adapter.onGameStart();
-        var initState = this.adapter.getGameState();
-        this.trainUpdate(initState, onDoneTrain);
-    }
+    public train() {
+        if (this.remainingIterations > 0) {
+            this.remainingIterations--;
+            var gameState = this.adapter.getGameState();
 
-    private trainUpdate(gameState, onDoneTrain) {
-        if (gameState.status) { // Alive
-            // Get and perform action
+            // Check if there is a previous state to get a reward for
+            if (previousState || previousAction) {
+                var reward = this.adapter.getReward(previousState, previousAction, gameState);
+                this.brain.backward(reward);
+            }
+
+            // Perform the predicted action
             var action = this.brain.forward(gameState.features);
             this.adapter.onAction(action);
-            this.remainingIterations--;
 
-            // Loop with the game time (adapter.waitTime)
-            setTimeout(() => {
-                // Grab the new state and the reward
-                var newState = this.adapter.getGameState();
-                var reward = this.adapter.getReward(gameState, action, newState);
-
-                // Train the NN on this reward
-                this.brain.backward(reward);
-
-                // Loop back with our new state
-                this.trainUpdate(newState, onDoneTrain);
-            }, this.adapter.waitTime);
-        } else if (this.remainingIterations > 0) { // Dead and keep training
-            this.train(onDoneTrain);
-        } else { // Done training
-            onDoneTrain();
+            // Update the previous states
+            this.previousState = gameState;
+            this.previousAction = action;
+        } else {
+            // Done training so send back our brain data
+            this.adapter.onDoneTrain(this.getBrainJSON());
         }
+    }
+
+    // Called when a new game starts
+    public onGameStart() {
+        this.previousState = null;
+        this.previousAction = null;
     }
 
     public test(onDoneTest) {
@@ -71,6 +74,10 @@ class Brain {
     private setupForTest() {
         this.brain.epsilon_test_time = 0.0; // Don't make any more random choices
         this.brain.learning = false;
+    }
+
+    public getBrainJSON() {
+        return this.brain.value_net.toJSON());
     }
 }
 
