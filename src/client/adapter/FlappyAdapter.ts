@@ -21,7 +21,7 @@ class FlappyAdapter {
         var state = this.sim.onGetState();
         var bird = state.bird;
         var pipe = state.pipes[0];
-        state.features = [Math.abs(pipe.x - bird.x), bird.y - pipe.y];
+        state['features'] = [Math.abs(pipe.x - bird.x), bird.y - pipe.y];
 
         return state;
     }
