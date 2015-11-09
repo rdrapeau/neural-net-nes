@@ -18,6 +18,7 @@ var FlappyComponent = React.createClass({
         this.flappySimulator = new FlappySimulator();
         this.flappyRenderer = new FlappyRenderer(this.flappySimulator, "flappyCanvas");
 
+        // Start the game loop
         setInterval((function() {
             // Update the simulation
             this.flappySimulator.update();
@@ -26,24 +27,13 @@ var FlappyComponent = React.createClass({
             this.flappyRenderer.render();
         }).bind(this), timePerFrame);
 
+        // Lets jump when there is a browser key event
+        // so humans can play
         window.addEventListener("keyup", (function() {
-            console.log('keyup');
-            this.onAction(1);
+            this.flappySimulator.onAction(1);
         }).bind(this), false);
 
         this.props.onLoaded(this, FPS);
-    },
-
-    onStart : function() {
-        this.flappySimulator.onAction(1);
-    },
-
-    onAction : function(action) {
-        this.flappySimulator.onAction(action);
-    },
-
-    onGetState : function() {
-        return this.flappySimulator.onGetState();
     },
 
     render : function() {

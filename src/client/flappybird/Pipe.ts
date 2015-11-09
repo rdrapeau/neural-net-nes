@@ -1,12 +1,13 @@
 import Constants = require('./Constants');
 
 class Pipe {
-	public static PIPE_SPEED = 1.2;
+	public static PIPE_SPEED = 1.9;
 	public static PIPE_WIDTH = 52;
-	public static Y_DELTA = 70;
-	public static Y_MIN = 100;
-	public static X_GAP_WIDTH = 3 * Pipe.PIPE_WIDTH;
-	public static Y_GAP_WIDTH = 100;
+	public static CAP_HEIGHT = 26;
+	public static Y_DELTA = 300;
+	public static Y_MIN = 180;
+	public static X_GAP_WIDTH = 2.4 * Pipe.PIPE_WIDTH;
+	public static Y_GAP_WIDTH = 120;
 
 	public x;
 	public y;

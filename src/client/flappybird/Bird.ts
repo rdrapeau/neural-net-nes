@@ -4,7 +4,7 @@ import Pipe = require('./Pipe');
 class Bird {
 	public static BIRD_WIDTH = 34;
 	public static BIRD_HEIGHT = 32;
-	public static FLAP_ACCELERATION = 4.5;
+	public static FLAP_ACCELERATION = 4.6;
 
 	public x;
 	public y;
@@ -20,6 +20,7 @@ class Bird {
 	public update(pipes : Pipe[]): boolean {
 		this.dy += Constants.GRAVITY;
 		this.y += this.dy
+		this.y = Math.max(0, this.y);
 
 		// Ground collision check
 		if (this.y - Bird.BIRD_HEIGHT > Constants.GAME_HEIGHT) {

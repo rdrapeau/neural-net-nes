@@ -39,7 +39,6 @@ var AppComponent = React.createClass({
     },
 
     render : function() {
-        // <NESComponent onLoaded={this.onLoadNESGame} />
         return (
             <div id="app">
                 <FlappyComponent onLoaded={this.onLoadFlappyGame} />
