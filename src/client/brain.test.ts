@@ -118,8 +118,6 @@ function runTraining(test, numTestIterations, precision, targetMean) {
     }).reduce(function(a, b) { return a + b; });
 
     var variance = squaredResidualSum / numTestIterations;
-    console.log(mean);
-    console.log(variance);
     test.ok(
         mean + precision >= targetMean && mean - precision <= targetMean,
         'Mean should be very close to ' + targetMean
