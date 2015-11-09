@@ -1,6 +1,6 @@
 var React = require('react');
 var NESComponent = require('./NESComponent.jsx');
-var FlappyBirdComponent = require('./FlappyBirdComponent.jsx');
+var FlappyComponent = require('./FlappyComponent.jsx');
 var FlappyBrain = require('../flappyBrain');
 
 var AppComponent = React.createClass({
@@ -35,14 +35,13 @@ var AppComponent = React.createClass({
     },
 
     onTrainingEnd : function() {
-        this.brain.test();
+        // this.brain.test();
     },
 
     render : function() {
-        // <NESComponent onLoaded={this.onLoadNESGame} />
         return (
             <div id="app">
-                <FlappyBirdComponent onLoaded={this.onLoadFlappyGame} />
+                <FlappyComponent onLoaded={this.onLoadFlappyGame} />
             </div>
         );
 	}
