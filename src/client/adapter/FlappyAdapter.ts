@@ -19,16 +19,22 @@ class FlappyAdapter {
 
     public getGameState() {
         var state = this.sim.onGetState();
+        var bird = state.bird;
+        var pipe = state.pipes[0];
 
-        // Change this to get more features
-        state['features'] = [1];
-        return state;
+        return {
+            features: [Math.abs(pipe.x - bird.x), bird.y - pipe.y]
+        };
     }
 
     public getReward(gameState, action, newState) {
-        console.log(newState);
         // Returns the reward given the game state, the action performed, and the new state
-        return action ? 1 : -1;
+        if (newState.dead) {
+            console.log('dead');
+            return -1000;
+        }
+
+        return 1;
     }
 
     public onAction(action) {
