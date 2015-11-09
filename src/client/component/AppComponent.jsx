@@ -26,10 +26,15 @@ var AppComponent = React.createClass({
     onTestTick : function() {
         this.brain.test();
     },
+    
+    printBrain : function() {
+        console.log(JSON.stringify(this.brain.getBrainJSON()));
+    },
 
     render : function() {
         return (
             <div id="app">
+                <button onClick={this.printBrain}>Print Brain</button>
                 <InfoComponent
                     brain={this.brain ? this.brain.brain : null} 
                     testTickCount={this.state.testTickCount} />
