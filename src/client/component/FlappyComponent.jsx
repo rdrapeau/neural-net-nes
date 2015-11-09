@@ -61,7 +61,8 @@ var FlappyComponent = React.createClass({
 
         // Update the parent ticker
         this.frameCount++;
-        if (this.frameCount > FRAMES_PER_TICK) {
+        if (this.frameCount > FRAMES_PER_TICK ||
+            this.flappySimulator.isDead()) {
             if (this.flappySimulator.isRunning()) {
                 this.props.onTick();
             }

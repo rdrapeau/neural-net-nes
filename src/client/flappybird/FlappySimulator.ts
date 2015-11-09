@@ -8,6 +8,7 @@ class FlappySimulator {
 
 	private bird: Bird;
 	private pipes: Pipe[];
+	private died;
 
 	constructor() {
 		this.reset();
@@ -36,34 +37,39 @@ class FlappySimulator {
 				y: this.bird.y,
 				dy: this.bird.dy
 			},
-			frames : this.frames
+			frames : this.frames,
+			dead: this.died
 		} : null;
 	}
 
 	public update() {
 		if (this.started) {
-			// Update pipes
-			var i = 0;
-			while (i < this.pipes.length) {
-				if (this.pipes[i].update()) {
-					// Remove the pipe
-					this.pipes.splice(i, 1);
-				} else {
-					i++;
+			if (!this.died) {
+				// Update pipes
+				var i = 0;
+				while (i < this.pipes.length) {
+					if (this.pipes[i].update()) {
+						// Remove the pipe
+						this.pipes.splice(i, 1);
+					} else {
+						i++;
+					}
 				}
-			}
 
-			// if the last pipe is a threshold away from the right,
-			// make a new pipe
-			if (this.pipes[this.pipes.length - 1].isPastNewMarker()) {
-				this.addPipe();
-			}
+				// if the last pipe is a threshold away from the right,
+				// make a new pipe
+				if (this.pipes[this.pipes.length - 1].isPastNewMarker()) {
+					this.addPipe();
+				}
 
-			// Update bird
-			if (this.bird.update(this.pipes)) {
+				// Update bird
+				if (this.bird.update(this.pipes)) {
+					// Allow one more tick of dead
+					this.died = true;
+				}
+			} else {
 				this.reset();
 			}
-
 			this.frames++;
 		}
 	}
@@ -72,9 +78,14 @@ class FlappySimulator {
 		return this.started;
 	}
 
+	public isDead() {
+		return this.died;
+	}
+
 	private reset() {
 		// Garbage collector will get the bird and pipes
 		this.started = false;
+		this.died = false;
 		this.bird = null;
 		this.pipes = [];
 		this.frames = 0;
