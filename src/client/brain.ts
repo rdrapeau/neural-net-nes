@@ -22,6 +22,10 @@ class Brain {
         if (this.remainingIterations > 0) {
             this.remainingIterations--;
             var gameState = this.adapter.getGameState();
+            if (!gameState) {
+                // GameState is null
+                return;
+            }
 
             // Check if there is a previous state to get a reward for
             if (this.previousState || this.previousAction) {
