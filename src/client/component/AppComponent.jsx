@@ -28,9 +28,14 @@ var AppComponent = React.createClass({
         return this.brain.brain;
     },
 
+    printBrain : function() {
+        console.log(JSON.stringify(this.brain.getBrainJSON()));
+    },
+
     render : function() {
         return (
             <div id="app">
+                <button onClick={this.printBrain}>Print Brain</button>
                 <FlappyComponent
                     onLoaded={this.onLoaded}
                     onTrainTick={this.onTrainTick}
