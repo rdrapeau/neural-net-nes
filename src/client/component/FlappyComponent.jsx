@@ -51,7 +51,10 @@ var FlappyComponent = React.createClass({
         if (!this.flappySimulator.isRunning()) {
             this.frameCount = 0;
             this.flappyAdapter.onGameStart();
-            this.setState({gameCount : this.state.gameCount + 1});
+
+            if (!this.trainingDone) {
+                this.setState({gameCount : this.state.gameCount + 1});
+            }
         }
 
         // Update the simulation
@@ -69,9 +72,9 @@ var FlappyComponent = React.createClass({
                 this.props.onTestTick();
             } else {
                 this.props.onTrainTick();
+                this.setState({iterationCount : this.state.iterationCount + 1});
             }
             this.frameCount = 0;
-            this.setState({iterationCount : this.state.iterationCount + 1});
         }
 
         var timePerFrame = (1 / this.state.fps) * 1000.0;
