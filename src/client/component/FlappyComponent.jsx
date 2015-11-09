@@ -12,7 +12,7 @@ var FlappyComponent = React.createClass({
     },
 
     componentDidMount : function() {
-        var FPS = 60.0;
+        var FPS = 200.0;
         var timePerFrame = (1 / FPS) * 1000.0;
 
         this.flappySimulator = new FlappySimulator();
