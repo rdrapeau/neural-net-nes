@@ -1,7 +1,7 @@
 var React = require('react');
 var NESComponent = require('./NESComponent.jsx');
 var FlappyComponent = require('./FlappyComponent.jsx');
-var FlappyBrain = require('../brain');
+var Brain = require('../brain');
 
 var AppComponent = React.createClass({
     brain : null,

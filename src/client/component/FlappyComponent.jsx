@@ -2,6 +2,7 @@ var React = require('react');
 var Constants = require('../flappybird/Constants');
 var FlappySimulator = require('../flappybird/FlappySimulator');
 var FlappyRenderer = require('../flappybird/FlappyRenderer');
+var FlappyAdapter = require('../adapter/FlappyAdapter');
 
 var RENDER_FPS = 60.0;
 var FRAMES_PER_TICK = 18;
@@ -45,7 +46,8 @@ var FlappyComponent = React.createClass({
 
     loop : function() {
         // Always run the simulation
-        if (this.flappySimulator.isRunning()) {
+        if (!this.flappySimulator.isRunning()) {
+            this.frameCount = 0;
             this.flappyAdapter.onGameStart();
         }
 
@@ -61,9 +63,9 @@ var FlappyComponent = React.createClass({
         this.frameCount++;
         if (this.frameCount > FRAMES_PER_TICK) {
             if (this.trainingDone) {
-                this.props.onTrainTick();
-            } else {
                 this.props.onTestTick();
+            } else {
+                this.props.onTrainTick();
             }
             this.frameCount = 0;
         }
