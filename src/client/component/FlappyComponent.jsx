@@ -4,10 +4,13 @@ var FlappySimulator = require('../flappybird/FlappySimulator');
 var FlappyRenderer = require('../flappybird/FlappyRenderer');
 
 var RENDER_FPS = 60.0;
+var FRAMES_PER_TICK = 18;
 
 var FlappyComponent = React.createClass({
     flappySimulator : null,
     flappyRenderer : null,
+    flappyAdapter : null,
+    frameCount : 0,
 
     getInitialState : function() {
         return {
@@ -16,9 +19,16 @@ var FlappyComponent = React.createClass({
         };
     },
 
+    getBrainAdapter : function() {
+        return this.flappyAdapter;
+    },
+
     componentDidMount : function() {
         this.flappySimulator = new FlappySimulator();
         this.flappyRenderer = new FlappyRenderer(this.flappySimulator, "flappyCanvas");
+        this.flappyAdapter = new FlappyAdapter(this.flappySimulator);
+
+        this.props.onLoaded(this);
 
         // Start game loop
         this.loop();
@@ -28,16 +38,26 @@ var FlappyComponent = React.createClass({
         window.addEventListener("keyup", (function() {
             this.flappySimulator.onAction(1);
         }).bind(this), false);
-
-        this.props.onLoaded(this);
     },
 
     loop : function() {
+        // Always run the simulation
+        if (this.flappySimulator.isRunning()) {
+            this.flappyAdapter.onGameStart();
+        }
+
         // Update the simulation
         this.flappySimulator.update();
 
+        // Render
         if (this.state.renderEnabled) {
             this.flappyRenderer.render();
+        }
+
+        // Update the parent ticker
+        frameCount++;
+        if (frameCount > FRAMES_PER_TICK) {
+            this.props.onTick();
         }
 
         var timePerFrame = (1 / this.state.fps) * 1000.0;

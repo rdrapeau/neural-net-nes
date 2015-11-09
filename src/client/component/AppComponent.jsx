@@ -1,7 +1,7 @@
 var React = require('react');
 var NESComponent = require('./NESComponent.jsx');
 var FlappyComponent = require('./FlappyComponent.jsx');
-var FlappyBrain = require('../flappyBrain');
+var FlappyBrain = require('../brain');
 
 var AppComponent = React.createClass({
     brain : null,
@@ -11,37 +11,18 @@ var AppComponent = React.createClass({
         return {};
     },
 
-    onLoadNESGame : function(nesComponent) {
-        console.log(nesComponent);
+    onLoaded : function(component) {
+        this.brain = new Brain(component.getBrainAdapter());
     },
 
-    onLoadFlappyGame : function(component, FPS) {
-        this.brain = new FlappyBrain(this.onAction, this.onGetState, this.onStart, this.onTrainingEnd, FPS);
-        this.currentGame = component;
-
+    onTick : function() {
         this.brain.train();
-    },
-
-    onStart : function() {
-        this.currentGame.onStart();
-    },
-
-    onAction : function(action) {
-        this.currentGame.onAction(action);
-    },
-
-    onGetState : function() {
-        return this.currentGame.onGetState();
-    },
-
-    onTrainingEnd : function() {
-        // this.brain.test();
     },
 
     render : function() {
         return (
             <div id="app">
-                <FlappyComponent onLoaded={this.onLoadFlappyGame} />
+                <FlappyComponent onLoaded={this.onLoaded} onTick={this.onTick} />
             </div>
         );
 	}
