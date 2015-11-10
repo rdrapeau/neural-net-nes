@@ -24,7 +24,7 @@ class Brain {
     public train() {
         this.setupForTrain();
         var gameState = this.adapter.getGameState();
-        if (!gameState) {
+        if (gameState === null) {
             // GameState is null
             return false;
         }
