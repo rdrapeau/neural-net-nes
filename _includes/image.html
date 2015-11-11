@@ -1,1 +1,1 @@
-<img class="{{ include.class }}" src="{{ site.baseurl }}/assets/{{ include.name }}.{{ include.type }}">
+<img class="{{ include.class }}" src="{{ site.baseurl }}/assets/{{ include.name }}.{{ include.type }}" {% if include.width %} width="{{ include.width }}" {% endif %}/>
