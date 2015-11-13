@@ -27,11 +27,30 @@ class FlappySimulator {
 		}
 	}
 
+	private getNextPipeState() {
+		for (var i = 0; i < this.pipes.length; i++) {
+			if (this.pipes[i].x > this.bird.x) {
+				return {
+					x: this.pipes[i].x,
+					y: this.pipes[i].y
+				};
+			}
+		}
+
+		return {
+			x: this.pipes[0].x,
+			y: this.pipes[0].y
+		};
+	}
+
 	public onGetState() {
+
+
 		return this.started ? {
 			pipes: this.pipes.map((pipe) => {
 				return { x: pipe.x, y: pipe.y };
 			}),
+			nextPipe: this.getNextPipeState(),
 			bird: {
 				x: this.bird.x,
 				y: this.bird.y,
