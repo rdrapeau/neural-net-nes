@@ -18,18 +18,9 @@ var InfoComponent = React.createClass({
         }
     },
 
-    printBrain : function() {
-        if (this.props.brain) {
-            console.log(
-                JSON.stringify(this.props.brain.getBrainJSON()
-            ));
-        }
-    },
-
     render : function() {
         return (
             <div ref="vis">
-                <button onClick={this.printBrain}>Print Brain</button>
                 <div>Training Iterations: {this.props.trainTickCount}</div>
                 {this.brainDump()}
             </div>

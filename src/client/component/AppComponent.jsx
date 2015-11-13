@@ -12,6 +12,7 @@ var AppComponent = React.createClass({
         return {
             trainTickCount: 0,
             isTraining: true,
+            brainJSON: ""
         };
     },
 
@@ -23,8 +24,26 @@ var AppComponent = React.createClass({
         if (this.state.isTraining) {
             this.brain.train();
             this.setState({trainTickCount : this.state.trainTickCount + 1});
+
+            // Update brain JSON every N ticks
+            if ((this.state.trainTickCount + 1) % 100 == 0) {
+                this.setState({brainJSON : JSON.stringify(this.brain.getBrainJSON())});
+            }
         } else {
             this.brain.test();
+        }
+    },
+
+    loadBrain : function() {
+        var json = null;
+        try {
+            json = JSON.parse(this.refs.brainJSON.value);
+        } catch (e) {
+            this.setState({brainJSON : "INVALID BRAIN"});
+        }
+
+        if (json) {
+            this.brain.loadBrain(json);
         }
     },
 
@@ -35,7 +54,15 @@ var AppComponent = React.createClass({
     render : function() {
         return (
             <div id="app">
-                <button onClick={this.toggleTrain}>Mode: {this.state.isTraining ? "Train" : "Test"}</button>
+                <div>
+                    <button onClick={this.toggleTrain}>Mode: {this.state.isTraining ? "Train" : "Test"}</button>
+                </div>
+
+                <div>
+                    <textarea ref="brainJSON" value={this.state.brainJSON}></textarea>
+                    <button onClick={this.loadBrain}>Load Brain</button>
+                </div>
+
                 <InfoComponent
                     brain={this.brain} 
                     trainTickCount={this.state.trainTickCount} />
