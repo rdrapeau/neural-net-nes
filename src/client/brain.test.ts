@@ -110,6 +110,14 @@ class BrainTest {
         runTraining(test, 1000, 0.1, 1);
         test.done();
     }
+
+    public static testTrainTwoDimensionalState(test) {
+        BrainTest.adapter.numIterations = 4000;
+        BrainTest.adapter.stateSize = 2;
+        BrainTest.adapter.gameState = { status: true, features: [Math.random(), Math.random()] };
+        runTraining(test, 1000, 0.1, 1);
+        test.done();
+    }
 }
 
 function runTraining(test, numTestIterations, precision, targetMean) {
