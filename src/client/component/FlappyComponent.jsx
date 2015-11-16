@@ -45,7 +45,7 @@ var FlappyComponent = React.createClass({
 
     loopShell : function() {
         if (!this.state.renderEnabled) {
-            for (var i = 0; i < 100; i++) {
+            for (var i = 0; i < 200; i++) {
                 // Loop hard core, losing some liquidity in
                 // event loop (thus losing updates to the DOM)
                 this.loop();
