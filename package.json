@@ -20,6 +20,6 @@
     "reactify" : "latest",
     "vinyl-source-stream" : "latest"
   },
-  "author": "Aaron Nech",
+  "author": "Aaron Nech, Sonja Khan, Ryan Drapeau",
   "license": "N/A"
 }
