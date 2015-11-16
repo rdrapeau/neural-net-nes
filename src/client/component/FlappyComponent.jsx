@@ -5,7 +5,7 @@ var FlappyRenderer = require('../flappybird/FlappyRenderer');
 var FlappyAdapter = require('../adapter/FlappyAdapter');
 
 var RENDER_FPS = 60.0;
-var FRAMES_PER_TICK = 12;
+var FRAMES_PER_TICK = 8;
 
 var FlappyComponent = React.createClass({
     flappySimulator : null,
@@ -45,7 +45,7 @@ var FlappyComponent = React.createClass({
 
     loopShell : function() {
         if (!this.state.renderEnabled) {
-            for (var i = 0; i < 200; i++) {
+            for (var i = 0; i < 300; i++) {
                 // Loop hard core, losing some liquidity in
                 // event loop (thus losing updates to the DOM)
                 this.loop();

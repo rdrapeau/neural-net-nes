@@ -1,6 +1,6 @@
 class Constants {
-	public static GAME_WIDTH = 800;
-	public static GAME_HEIGHT = 600;
+	public static GAME_WIDTH = 320;
+	public static GAME_HEIGHT = 480;
 	public static GRAVITY = 0.25;
 }
 

@@ -18,14 +18,15 @@ class Brain {
         // by backpropping the temporal difference learning rule.
         var tdtrainer_options = { learning_rate: 0.001, momentum: 0.0, batch_size: 64, l2_decay: 0.01 };
         var opt : any = {};
-        opt.temporal_window = 3;
-        opt.experience_size = 50000;
-        opt.start_learn_threshold = 1000;
-        opt.gamma = 0.7;
-        opt.learning_steps_total = 500000;
-        opt.learning_steps_burnin = 3000;
+        opt.temporal_window = 10;
+        opt.experience_size = 15000;
+        opt.start_learn_threshold = 5000;
+        opt.gamma = 0.8;
+        opt.learning_steps_total = 450000;
+        opt.learning_steps_burnin = 15000;
         opt.epsilon_min = 0.05;
         opt.epsilon_test_time = 0.05;
+        opt.hidden_layer_sizes = [15, 15];
         opt.tdtrainer_options = tdtrainer_options;
 
         this.brain = new deepqlearn.Brain(gameAdapter.stateSize, gameAdapter.numActions, opt);
@@ -42,6 +43,8 @@ class Brain {
             // GameState is null
             return false;
         }
+
+        console.log(gameState.features);
 
         // Check if there is a previous state to get a reward for
         if (this.previousState !== null && this.previousAction !== null) {
