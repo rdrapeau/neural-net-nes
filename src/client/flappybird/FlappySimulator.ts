@@ -9,6 +9,7 @@ class FlappySimulator {
 	private bird: Bird;
 	private pipes: Pipe[];
 	private died;
+	private score;
 
 	constructor() {
 		this.reset();
@@ -44,8 +45,6 @@ class FlappySimulator {
 	}
 
 	public onGetState() {
-
-
 		return this.started ? {
 			pipes: this.pipes.map((pipe) => {
 				return { x: pipe.x, y: pipe.y };
@@ -57,40 +56,53 @@ class FlappySimulator {
 				dy: this.bird.dy
 			},
 			frames : this.frames,
-			dead: this.died
+			score : this.score,
+			dead : this.died
 		} : null;
 	}
 
 	public update() {
-		if (this.started) {
-			if (!this.died) {
-				// Update pipes
-				var i = 0;
-				while (i < this.pipes.length) {
-					if (this.pipes[i].update()) {
-						// Remove the pipe
-						this.pipes.splice(i, 1);
-					} else {
-						i++;
-					}
-				}
-
-				// if the last pipe is a threshold away from the right,
-				// make a new pipe
-				if (this.pipes[this.pipes.length - 1].isPastNewMarker()) {
-					this.addPipe();
-				}
-
-				// Update bird
-				if (this.bird.update(this.pipes)) {
-					// Allow one more tick of dead
-					this.died = true;
-				}
-			} else {
-				this.reset();
-			}
-			this.frames++;
+		if (!this.started) {
+			return;
 		}
+		// We haven't died. Update the simulation
+		if (!this.died) {
+			// Update pipes
+			var i = 0;
+			while (i < this.pipes.length) {
+				if (this.pipes[i].update()) {
+					// Remove the pipe, since it went
+					// off screen. We don't need to increment
+					// the iteration since removing moves us
+					// forwar relatively
+					this.pipes.splice(i, 1);
+				} else {
+					// Score pipes the bird passes
+					if (!this.pipes[i].scored &&
+						this.pipes[i].x < this.bird.x) {
+						this.score++;
+						this.pipes[i].scored = true;
+					}
+					i++;
+				}
+			}
+
+			// if the last pipe is a threshold away from the right,
+			// make a new pipe
+			if (this.pipes[this.pipes.length - 1].isPastNewMarker()) {
+				this.addPipe();
+			}
+
+			// Update bird
+			if (this.bird.update(this.pipes)) {
+				// Allow one more tick of dead
+				this.died = true;
+			}
+		} else {
+			// We died, so we should reset the simulation
+			this.reset();
+		}
+		this.frames++;
 	}
 
 	public isRunning() {
@@ -101,10 +113,15 @@ class FlappySimulator {
 		return this.died;
 	}
 
+	public getScore() {
+		return this.score;
+	}
+
 	private reset() {
 		// Garbage collector will get the bird and pipes
 		this.started = false;
 		this.died = false;
+		this.score = 0;
 		this.bird = null;
 		this.pipes = [];
 		this.frames = 0;

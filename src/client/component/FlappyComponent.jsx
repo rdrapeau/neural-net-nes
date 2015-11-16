@@ -12,6 +12,7 @@ var FlappyComponent = React.createClass({
     flappyRenderer : null,
     flappyAdapter : null,
     frameCount : 0,
+    lastScore : 0,
 
     getInitialState : function() {
         return {
@@ -51,8 +52,12 @@ var FlappyComponent = React.createClass({
             this.setState({gameCount : this.state.gameCount + 1});
         }
 
+        var lastScore = this.flappySimulator.getScore();
+
         // Update the simulation
         this.flappySimulator.update();
+
+        var scored = this.flappySimulator.getScore() - lastScore > 0;
 
         // Render
         if (this.state.renderEnabled) {
@@ -61,8 +66,12 @@ var FlappyComponent = React.createClass({
 
         // Update the parent ticker
         this.frameCount++;
+
+        // Update our brain if we have ticked over a threshold,
+        // have died, or have scored.
         if (this.frameCount > FRAMES_PER_TICK ||
-            this.flappySimulator.isDead()) {
+            this.flappySimulator.isDead() ||
+            scored) {
             if (this.flappySimulator.isRunning()) {
                 this.props.onTick();
             }

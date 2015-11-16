@@ -22,7 +22,7 @@ class FlappyAdapter {
     public getGameState() {
         var state = this.sim.onGetState();
         var bird = state.bird;
-        var pipe = state.pipes[0];
+        var pipe = state.nextPipe;
         state['features'] = [
             Math.abs(pipe.x - bird.x) / Constants.GAME_WIDTH,
             Math.abs(bird.y - (Bird.BIRD_HEIGHT / 2) - pipe.y) / Constants.GAME_HEIGHT
@@ -34,10 +34,16 @@ class FlappyAdapter {
     public getReward(gameState, action, newState) {
         // Returns the reward given the game state, the action performed, and the new state
         if (newState.dead) {
-            return -1;
+            // We died, punish heavily
+            return -1000.0;
+        } else if (newState.score - gameState.score > 0) {
+            console.log("SCORE!");
+            // We scored, reward heavily
+            return 10;
         }
 
-        return 0.001;
+        // Reward a bit for not dying
+        return 1.0;
     }
 
     public onAction(action) {

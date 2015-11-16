@@ -11,6 +11,7 @@ class Pipe {
 
 	public x;
 	public y;
+	public scored;
 
 	constructor(lastPipe ?: Pipe) {
 		if (lastPipe) {
@@ -27,6 +28,7 @@ class Pipe {
 		}
 
 		this.x = Constants.GAME_WIDTH + Pipe.PIPE_WIDTH;
+		this.scored = false;
 	}
 
 	// Returns true if we should remove the pipe
