@@ -34,13 +34,30 @@ var FlappyComponent = React.createClass({
         this.props.onLoaded(this);
 
         // Start game loop
-        this.loop();
+        this.loopShell();
 
         // Lets jump when there is a browser key event
         // so humans can play
         window.addEventListener("keyup", (function() {
             this.flappySimulator.onAction(1);
         }).bind(this), false);
+    },
+
+    loopShell : function() {
+        if (!this.state.renderEnabled) {
+            for (var i = 0; i < 100; i++) {
+                // Loop hard core, losing some liquidity in
+                // event loop (thus losing updates to the DOM)
+                this.loop();
+            }
+        } else {
+            // Loop once per time out,
+            // Allows more liquidity in event loop (thus better timed)
+            this.loop();
+        }
+
+        var timePerFrame = (1 / this.state.fps) * 1000.0;
+        setTimeout(this.loopShell, timePerFrame);
     },
 
     loop : function() {
@@ -77,9 +94,6 @@ var FlappyComponent = React.createClass({
             }
             this.frameCount = 0;
         }
-
-        var timePerFrame = (1 / this.state.fps) * 1000.0;
-        setTimeout(this.loop, timePerFrame);
     },
 
     toggleRender : function() {

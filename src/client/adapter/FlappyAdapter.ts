@@ -4,7 +4,7 @@ import Bird = require('../flappybird/Bird');
 import Constants = require('../flappybird/Constants');
 
 class FlappyAdapter {
-    public stateSize = 2; // Size of the state vector passed to the NN
+    public stateSize = 4; // Size of the state vector passed to the NN
     public numActions = 2; // Number of possible actions from the NN
     public brain = null; // a reference to the brain
 
@@ -25,7 +25,9 @@ class FlappyAdapter {
         var pipe = state.nextPipe;
         state['features'] = [
             Math.abs(pipe.x - bird.x) / Constants.GAME_WIDTH,
-            Math.abs(bird.y - (Bird.BIRD_HEIGHT / 2) - pipe.y) / Constants.GAME_HEIGHT
+            Math.abs(bird.y - (Bird.BIRD_HEIGHT / 2) - pipe.y) / Constants.GAME_HEIGHT,
+            bird.y / Constants.GAME_HEIGHT,
+            bird.dy / Constants.GAME_HEIGHT
         ];
 
         return state;
