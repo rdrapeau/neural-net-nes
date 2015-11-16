@@ -18,14 +18,14 @@ class Pipe {
 			// Compute a y delta
 			var yDelta = ((Math.random() * Pipe.Y_DELTA * 2.0) - Pipe.Y_DELTA);
 			this.y = lastPipe.y + yDelta;
-
-			// clamp it
-			this.y = Math.min(this.y, Constants.GAME_HEIGHT - Pipe.Y_MIN);
-			this.y = Math.max(this.y, Pipe.Y_MIN);
 		} else {
 			// first pipe
-			this.y = Constants.GAME_HEIGHT / 2;
+			this.y = Math.random() * Constants.GAME_HEIGHT;
 		}
+
+		// clamp it
+		this.y = Math.min(this.y, Constants.GAME_HEIGHT - Pipe.Y_MIN);
+		this.y = Math.max(this.y, Pipe.Y_MIN);
 
 		this.x = Constants.GAME_WIDTH + Pipe.PIPE_WIDTH;
 		this.scored = false;

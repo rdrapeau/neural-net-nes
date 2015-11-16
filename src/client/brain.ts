@@ -14,7 +14,21 @@ class Brain {
     private oldEpsilonTestTime;
 
     constructor(gameAdapter) {
-        this.brain = new deepqlearn.Brain(gameAdapter.stateSize, gameAdapter.numActions);
+        // options for the Temporal Difference learner that trains the above net
+        // by backpropping the temporal difference learning rule.
+        var tdtrainer_options = { learning_rate: 0.001, momentum: 0.0, batch_size: 64, l2_decay: 0.01 };
+        var opt : any = {};
+        opt.temporal_window = 3;
+        opt.experience_size = 50000;
+        opt.start_learn_threshold = 1000;
+        opt.gamma = 0.7;
+        opt.learning_steps_total = 500000;
+        opt.learning_steps_burnin = 3000;
+        opt.epsilon_min = 0.05;
+        opt.epsilon_test_time = 0.05;
+        opt.tdtrainer_options = tdtrainer_options;
+
+        this.brain = new deepqlearn.Brain(gameAdapter.stateSize, gameAdapter.numActions, opt);
         this.adapter = gameAdapter;
         this.adapter.brain = this;
 
