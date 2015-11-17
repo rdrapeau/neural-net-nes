@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>NES Neural Net</title>
+    <title>Deep Q Learning</title>
     <description>Project site and blog for CSE571
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 11 Nov 2015 00:44:23 -0800</pubDate>
-    <lastBuildDate>Wed, 11 Nov 2015 00:44:23 -0800</lastBuildDate>
+    <pubDate>Mon, 16 Nov 2015 20:41:27 -0800</pubDate>
+    <lastBuildDate>Mon, 16 Nov 2015 20:41:27 -0800</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Teaching Flappy to Win</title>
+        <description>&lt;p&gt;At the end of our last post, we had managed to teach our bird to always flap. This simple goal took us quite a few hours of fiddling with the q learning and neural network parameters to realize what was causing it to fail. Training the bird to beat the game is a much more complicated task took us many more hours of experimentation. &lt;/p&gt;
+
+&lt;p&gt;First we were trying with a training period that was too small.&lt;/p&gt;
+
+&lt;p&gt;Optimized the game 10x gain&lt;/p&gt;
+
+&lt;p&gt;Bird was learning to flap no matter what.&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/5U2xCNBmjB0&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;strong&gt;Video. 1: We taught it to fly!&lt;/strong&gt;  &lt;/p&gt;
+</description>
+        <pubDate>Sun, 15 Nov 2015 13:44:40 -0800</pubDate>
+        <link>/2015/11/15/teaching-flappy-to-win.html</link>
+        <guid isPermaLink="true">/2015/11/15/teaching-flappy-to-win.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>Teaching Flappy to Fly</title>
@@ -31,8 +52,8 @@
 &lt;p&gt;Our next step is experimenting with various reward models and state inputs to teach our agent to beat flappy bird.&lt;/p&gt;
 </description>
         <pubDate>Tue, 10 Nov 2015 13:44:40 -0800</pubDate>
-        <link>/2015/11/10/teaching-flappy-to-fly_draft.html</link>
-        <guid isPermaLink="true">/2015/11/10/teaching-flappy-to-fly_draft.html</guid>
+        <link>/2015/11/10/teaching-flappy-to-fly.html</link>
+        <guid isPermaLink="true">/2015/11/10/teaching-flappy-to-fly.html</guid>
         
         
       </item>
