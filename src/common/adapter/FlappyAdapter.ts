@@ -12,7 +12,7 @@ class FlappyAdapter {
     public numActions = 2; // Number of possible actions from the NN
     public brain : Brain = null; // a reference to the brain
     public brainInstance = null; // a reference to the convnet brain
-    public totalIterations = 450000;
+    public totalIterations = 1000000;
 
     private sim: FlappySimulator;
 
@@ -29,7 +29,7 @@ class FlappyAdapter {
         var opt: any = {};
         opt.temporal_window = 10;
         opt.experience_size = 15000;
-        opt.start_learn_threshold = 5000;
+        opt.start_learn_threshold = 25000;
         opt.gamma = 0.8;
         opt.learning_steps_total = this.totalIterations;
         opt.learning_steps_burnin = 15000;
