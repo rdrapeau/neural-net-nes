@@ -29,7 +29,7 @@ class FlappyAdapter {
         var opt: any = {};
         opt.temporal_window = 10;
         opt.experience_size = 15000;
-        opt.start_learn_threshold = 25000;
+        opt.start_learn_threshold = 5000;
         opt.gamma = 0.8;
         opt.learning_steps_total = this.totalIterations;
         opt.learning_steps_burnin = 15000;
