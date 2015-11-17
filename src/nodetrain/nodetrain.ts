@@ -2,7 +2,7 @@
 
 var FlappySimulator = require('../common/flappybird/FlappySimulator');
 var FlappyAdapter = require('../common/adapter/FlappyAdapter');
-var FlappyDQNTrainer = require('../common/trainer/FlappyDQNTrainer');
+var FlappyDQNTimer = require('../common/timer/FlappyDQNTrainer');
 var Brain = require('../common/Brain');
 
 var fs = require('fs');
@@ -19,13 +19,13 @@ if (process.argv.length < 2) {
 var file = process.argv[2] || null;
 
 var count = 0;
-var flappyDQNTrainer = new FlappyDQNTrainer(
+var flappyDQNTimer = new FlappyDQNTimer(
 	flappySimulator,
 	flappyAdapter,
 	() => {
 		brain.train();
-		if (flappyDQNTrainer.getTicks() % 1000 === 0) {
-			console.log("Iteration: " + flappyDQNTrainer.getTicks());
+		if (flappyDQNTimer.getTicks() % 1000 === 0) {
+			console.log("Iteration: " + flappyDQNTimer.getTicks());
 			console.log("smooth - ish reward:" + brain.brain.average_reward_window.get_average());
 		}
 	}
@@ -33,12 +33,11 @@ var flappyDQNTrainer = new FlappyDQNTrainer(
 
 
 var n = flappyAdapter.getTargetIterations();
-for (var i = 0; i < n * FlappyDQNTrainer.FRAMES_PER_TICK; i++) {
-	flappyDQNTrainer.loop();
+for (var i = 0; i < n * flappyDQNTimer.FRAMES_PER_TICK; i++) {
+	flappyDQNTimer.frame();
 }
 
 if (file) {
-
 	fs.writeFile(file, JSON.stringify(brain.getBrainJSON()), function(err) {
 	    if (err) {
 	        return console.log(err);

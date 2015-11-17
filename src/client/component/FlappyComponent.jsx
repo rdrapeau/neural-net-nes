@@ -3,7 +3,7 @@ var Constants = require('../../common/flappybird/Constants');
 var FlappySimulator = require('../../common/flappybird/FlappySimulator');
 var FlappyRenderer = require('../render/FlappyRenderer');
 var FlappyAdapter = require('../../common/adapter/FlappyAdapter');
-var FlappyDQNTrainer = require('../../common/trainer/FlappyDQNTrainer');
+var FlappyDQNTimer = require('../../common/timer/FlappyDQNTimer');
 
 var RENDER_FPS = 60.0;
 
@@ -11,7 +11,7 @@ var FlappyComponent = React.createClass({
     flappySimulator : null,
     flappyRenderer : null,
     flappyAdapter : null,
-    flappyDQNTrainer : null,
+    flappyDQNTimer : null,
 
     getInitialState : function() {
         return {
@@ -29,7 +29,7 @@ var FlappyComponent = React.createClass({
         this.flappySimulator = new FlappySimulator();
         this.flappyRenderer = new FlappyRenderer(this.flappySimulator, "flappyCanvas");
         this.flappyAdapter = new FlappyAdapter(this.flappySimulator);
-        this.flappyDQNTrainer = new FlappyDQNTrainer(
+        this.flappyDQNTimer = new FlappyDQNTimer(
             this.flappySimulator,
             this.flappyAdapter,
             this.props.onTick
@@ -39,13 +39,6 @@ var FlappyComponent = React.createClass({
 
         // Start game loop
         this.loopShell();
-
-        // Lets jump when there is a browser key event
-        // so humans can play
-        // window.addEventListener("keyup", (function() {
-        //     this.flappySimulator.onAction(1);
-        //     return true;
-        // }).bind(this), false);
     },
 
     loopShell : function() {
@@ -53,12 +46,12 @@ var FlappyComponent = React.createClass({
             for (var i = 0; i < 300; i++) {
                 // Loop hard core, losing some liquidity in
                 // event loop (thus losing updates to the DOM)
-                this.flappyDQNTrainer.loop();
+                this.flappyDQNTimer.frame();
             }
         } else {
             // Loop once per time out,
             // Allows more liquidity in event loop (thus better timed)
-            this.flappyDQNTrainer.loop();
+            this.flappyDQNTimer.frame();
             // Render
             if (this.state.renderEnabled) {
                 this.flappyRenderer.render();

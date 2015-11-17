@@ -1,4 +1,4 @@
-class Trainer {
+class Timer {
 	private onTickCB : Function;
 	private tickCount;
 
@@ -7,7 +7,7 @@ class Trainer {
 		this.onTickCB = onTickCB;
 	}
 
-	public onTick() {
+	protected onTick() {
 		this.tickCount++;
 		this.onTickCB();
 	}
@@ -17,4 +17,4 @@ class Trainer {
 	}
 }
 
-export = Trainer;
+export = Timer;

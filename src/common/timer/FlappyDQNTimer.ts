@@ -1,8 +1,12 @@
 import FlappySimulator = require('../flappybird/FlappySimulator');
 import FlappyAdapter = require('../adapter/FlappyAdapter');
-import Trainer = require('./Trainer');
+import Timer = require('./Timer');
 
-class FlappyDQNTrainer extends Trainer {
+/**
+ * Timer class which controls how often a DQN
+ * for flappybird is ticked
+ */
+class FlappyDQNTimer extends Timer {
 	public static FRAMES_PER_TICK = 6;
 
 	private flappySimulator;
@@ -20,7 +24,7 @@ class FlappyDQNTrainer extends Trainer {
         this.flappyAdapter = flappyAdapter;
 	}
 
-    public loop() {
+    public frame() {
         // Always run the simulation
         if (!this.flappySimulator.isRunning()) {
             this.frameCount = 0;
@@ -39,7 +43,7 @@ class FlappyDQNTrainer extends Trainer {
 
         // Update our brain if we have ticked over a threshold,
         // have died, or have scored.
-        if (this.frameCount > FlappyDQNTrainer.FRAMES_PER_TICK ||
+        if (this.frameCount > FlappyDQNTimer.FRAMES_PER_TICK ||
             this.flappySimulator.isDead() ||
             scored) {
             if (this.flappySimulator.isRunning()) {
@@ -50,4 +54,4 @@ class FlappyDQNTrainer extends Trainer {
     }
 }
 
-export = FlappyDQNTrainer;
+export = FlappyDQNTimer;
