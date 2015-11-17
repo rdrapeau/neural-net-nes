@@ -3,7 +3,7 @@ import FlappyAdapter = require('../adapter/FlappyAdapter');
 import Trainer = require('./Trainer');
 
 class FlappyDQNTrainer extends Trainer {
-	private static FRAMES_PER_TICK = 6;
+	public static FRAMES_PER_TICK = 6;
 
 	private flappySimulator;
 	private flappyAdapter;

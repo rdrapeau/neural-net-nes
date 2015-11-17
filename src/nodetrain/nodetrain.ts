@@ -33,7 +33,7 @@ var flappyDQNTrainer = new FlappyDQNTrainer(
 
 
 var n = flappyAdapter.getTargetIterations();
-for (var i = 0; i < n * 12; i++) {
+for (var i = 0; i < n * FlappyDQNTrainer.FRAMES_PER_TICK; i++) {
 	flappyDQNTrainer.loop();
 }
 
