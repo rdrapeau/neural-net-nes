@@ -26,7 +26,7 @@ class Brain {
         opt.learning_steps_burnin = 15000;
         opt.epsilon_min = 0.05;
         opt.epsilon_test_time = 0.05;
-        opt.hidden_layer_sizes = [15, 15];
+        opt.hidden_layer_sizes = [35, 35];
         opt.tdtrainer_options = tdtrainer_options;
 
         this.brain = new deepqlearn.Brain(gameAdapter.stateSize, gameAdapter.numActions, opt);
