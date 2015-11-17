@@ -44,8 +44,6 @@ class Brain {
             return false;
         }
 
-        console.log(gameState.features);
-
         // Check if there is a previous state to get a reward for
         if (this.previousState !== null && this.previousAction !== null) {
             var reward = this.adapter.getReward(this.previousState, this.previousAction, gameState);

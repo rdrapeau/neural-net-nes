@@ -30,7 +30,7 @@ class FlappySimulator {
 
 	private getNextPipeState() {
 		for (var i = 0; i < this.pipes.length; i++) {
-			if (this.pipes[i].x > this.bird.x) {
+			if (this.pipes[i].x + Pipe.PIPE_WIDTH > this.bird.x) {
 				return {
 					x: this.pipes[i].x,
 					y: this.pipes[i].y
@@ -79,7 +79,7 @@ class FlappySimulator {
 				} else {
 					// Score pipes the bird passes
 					if (!this.pipes[i].scored &&
-						this.pipes[i].x < this.bird.x) {
+						this.pipes[i].x + Pipe.PIPE_WIDTH < this.bird.x) {
 						this.score++;
 						this.pipes[i].scored = true;
 					}

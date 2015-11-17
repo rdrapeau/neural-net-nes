@@ -4,9 +4,9 @@ class Pipe {
 	public static PIPE_SPEED = 1.9;
 	public static PIPE_WIDTH = 52;
 	public static CAP_HEIGHT = 26;
-	public static Y_DELTA = 120;
-	public static Y_MIN = 180;
-	public static X_GAP_WIDTH = 2.4 * Pipe.PIPE_WIDTH;
+	public static Y_DELTA = 90;
+	public static Y_MIN = 120;
+	public static X_GAP_WIDTH = 120;
 	public static Y_GAP_WIDTH = 120;
 
 	public x;
@@ -20,11 +20,11 @@ class Pipe {
 			this.y = lastPipe.y + yDelta;
 		} else {
 			// first pipe
-			this.y = Math.random() * Constants.GAME_HEIGHT;
+			this.y = Math.random() * (Constants.GAME_HEIGHT - Constants.GROUND_HEIGHT) + Pipe.Y_MIN;
 		}
 
 		// clamp it
-		this.y = Math.min(this.y, Constants.GAME_HEIGHT - Pipe.Y_MIN);
+		this.y = Math.min(this.y, Constants.GAME_HEIGHT - Pipe.Y_MIN - Constants.GROUND_HEIGHT);
 		this.y = Math.max(this.y, Pipe.Y_MIN);
 
 		this.x = Constants.GAME_WIDTH + Pipe.PIPE_WIDTH;

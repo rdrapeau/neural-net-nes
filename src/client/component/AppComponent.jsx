@@ -12,7 +12,7 @@ var AppComponent = React.createClass({
         return {
             trainTickCount: 0,
             isTraining: true,
-            brainJSON: ""
+            brainJSON: ''
         };
     },
 

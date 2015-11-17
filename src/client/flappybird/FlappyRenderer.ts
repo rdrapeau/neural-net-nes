@@ -14,6 +14,22 @@ class FlappyRenderer {
 	private pipeTop;
 	private pipeBottom;
 
+	// ground
+	private static GROUND_WIDTH = 336;
+	private static IMG_GROUND = 'assets/land.png';
+	private ground;
+	private groundX;
+
+	// sky
+	private static SKY_WIDTH = 276;
+	private static SKY_HEIGHT = 109;
+	private static IMG_SKY = 'assets/sky.png';
+	private sky;
+
+	// flappy bird
+	private static IMG_BIRD = 'assets/bird.png';
+	private bird;
+
 	private sim: FlappySimulator;
 
 	private canvas;
@@ -38,6 +54,45 @@ class FlappyRenderer {
 		fabric.util.loadImage(FlappyRenderer.IMG_PIPE_BOTTOM, (img) => {
 			this.pipeBottom = img;
 		});
+		fabric.util.loadImage(FlappyRenderer.IMG_GROUND, (img) => {
+			this.ground = img;
+		});
+		fabric.util.loadImage(FlappyRenderer.IMG_SKY, (img) => {
+			this.sky = img;
+		});
+		fabric.util.loadImage(FlappyRenderer.IMG_BIRD, (img) => {
+			this.bird = img;
+		});
+		this.groundX = 0;
+	}
+
+	private renderGround() {
+		this.canvas.add(new fabric.Image(this.ground, {
+			left: this.groundX,
+			top: Constants.GAME_HEIGHT - Constants.GROUND_HEIGHT
+		}));
+
+		this.canvas.add(new fabric.Image(this.ground, {
+			left: this.groundX + FlappyRenderer.GROUND_WIDTH,
+			top: Constants.GAME_HEIGHT - Constants.GROUND_HEIGHT
+		}));
+
+		this.groundX -= Pipe.PIPE_SPEED;
+		if (this.groundX <= -FlappyRenderer.GROUND_WIDTH) {
+			this.groundX = 0;
+		}
+	}
+
+	private renderSky() {
+		this.canvas.add(new fabric.Image(this.sky, {
+			left: 0,
+			top: Constants.GAME_HEIGHT - Constants.GROUND_HEIGHT - FlappyRenderer.SKY_HEIGHT
+		}));
+
+		this.canvas.add(new fabric.Image(this.sky, {
+			left: FlappyRenderer.SKY_WIDTH,
+			top: Constants.GAME_HEIGHT - Constants.GROUND_HEIGHT - FlappyRenderer.SKY_HEIGHT
+		}));
 	}
 
 	private renderPipe(pipe) {
@@ -61,7 +116,7 @@ class FlappyRenderer {
 			top: pipe.y + (Pipe.Y_GAP_WIDTH / 2),
 			fill: this.pipeBody,
 			width: Pipe.PIPE_WIDTH,
-			height: Constants.GAME_HEIGHT - (pipe.y - (Pipe.Y_GAP_WIDTH / 2))
+			height: (Constants.GAME_HEIGHT - (pipe.y + (Pipe.Y_GAP_WIDTH / 2))) - Constants.GROUND_HEIGHT
 		}));
 		// Bottom pipe (cap)
 		this.canvas.add(new fabric.Image(this.pipeBottom, {
@@ -72,12 +127,19 @@ class FlappyRenderer {
 
 	private renderBird(bird) {
 		// Draw flappy bird
-		this.canvas.add(new fabric.Rect({
+		this.canvas.add(new fabric.Image(this.bird, {
 			left: bird.x,
 			top: bird.y,
-			fill: 'red',
 			width: Bird.BIRD_WIDTH,
-			height: Bird.BIRD_HEIGHT
+			height: Bird.BIRD_HEIGHT * 4,
+			clipTo: function(ctx) {
+				ctx.rect(
+					-Bird.BIRD_WIDTH / 2,
+					-(Bird.BIRD_HEIGHT * 2),
+					Bird.BIRD_WIDTH,
+					Bird.BIRD_HEIGHT
+				);
+			}
 		}));
 	}
 
@@ -93,10 +155,13 @@ class FlappyRenderer {
 		this.canvas.add(new fabric.Rect({
 			left: 0,
 			top: 0,
-			fill: 'cyan',
+			fill: '#4ec0ca',
 			width: Constants.GAME_WIDTH,
 			height: Constants.GAME_HEIGHT
 		}));
+
+		// draw sky
+		this.renderSky();
 
 		// Draw bird
 		this.renderBird(state.bird);
@@ -105,6 +170,9 @@ class FlappyRenderer {
 		for (var i = 0; i < state.pipes.length; i++) {
 			this.renderPipe(state.pipes[i]);
 		}
+
+		// draw ground
+		this.renderGround();
 	}
 }
 

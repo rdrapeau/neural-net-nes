@@ -40,6 +40,7 @@ var FlappyComponent = React.createClass({
         // so humans can play
         window.addEventListener("keyup", (function() {
             this.flappySimulator.onAction(1);
+            return true;
         }).bind(this), false);
     },
 
