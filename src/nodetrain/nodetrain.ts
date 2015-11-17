@@ -2,7 +2,7 @@
 
 var FlappySimulator = require('../common/flappybird/FlappySimulator');
 var FlappyAdapter = require('../common/adapter/FlappyAdapter');
-var FlappyDQNTimer = require('../common/timer/FlappyDQNTrainer');
+var FlappyDQNTimer = require('../common/timer/FlappyDQNTimer');
 var Brain = require('../common/Brain');
 
 var fs = require('fs');

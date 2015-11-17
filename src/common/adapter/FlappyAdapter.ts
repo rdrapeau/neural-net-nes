@@ -35,7 +35,7 @@ class FlappyAdapter {
         opt.learning_steps_burnin = 15000;
         opt.epsilon_min = 0.05;
         opt.epsilon_test_time = 0.05;
-        opt.hidden_layer_sizes = [35, 35];
+        opt.hidden_layer_sizes = [10, 5, 5, 5];
         opt.tdtrainer_options = tdtrainer_options;
 
         this.brainInstance = new deepqlearn.Brain(this.stateSize, this.numActions, opt);
