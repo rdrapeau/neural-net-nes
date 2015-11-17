@@ -32,7 +32,7 @@ var flappyDQNTimer = new FlappyDQNTimer(
 );
 
 
-var n = flappyAdapter.getTargetIterations();
+var n : number = flappyAdapter.getTargetIterations();
 for (var i = 0; i < n * FlappyDQNTimer.FRAMES_PER_TICK; i++) {
 	flappyDQNTimer.frame();
 }

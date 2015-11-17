@@ -13,19 +13,29 @@ class FlappyDQNTimer extends Timer {
 	private flappyAdapter;
 	private frameCount;
 
+    private onGameOver: Function;
+
     constructor(
         flappySimulator: FlappySimulator,
         flappyAdapter: FlappyAdapter,
-        onTick: Function
+        onTick: Function,
+        onGameOver?: Function
     ) {
 		super(onTick);
 		this.frameCount = 0;
         this.flappySimulator = flappySimulator;
         this.flappyAdapter = flappyAdapter;
+        this.onGameOver = onGameOver || function(){};
 	}
 
     public frame() {
+        // When we die, call onGameOver()
+        if (this.flappySimulator.isDead()) {
+            this.onGameOver();
+        }
+
         // Always run the simulation
+        // The simulation will stop and reset the tick after dying
         if (!this.flappySimulator.isRunning()) {
             this.frameCount = 0;
             this.flappyAdapter.onGameStart();
