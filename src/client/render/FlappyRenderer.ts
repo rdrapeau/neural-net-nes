@@ -31,6 +31,9 @@ class FlappyRenderer {
 	private bird;
 
 	// score
+	private static SCORE_WIDTH = 24;
+	private static SCORE_HEIGHT = 36;
+	private static DIGIT_GAP = 2;
 	private static SCORE_0 = 'assets/font_big_0.png';
 	private static SCORE_1 = 'assets/font_big_1.png';
 	private static SCORE_2 = 'assets/font_big_2.png';
@@ -42,6 +45,7 @@ class FlappyRenderer {
 	private static SCORE_8 = 'assets/font_big_8.png';
 	private static SCORE_9 = 'assets/font_big_9.png';
 	private score_digits = [];
+	private digits;  // keep track of how many digits we have for placement
 
 	private sim: FlappySimulator;
 
@@ -107,6 +111,7 @@ class FlappyRenderer {
 		fabric.util.loadImage(FlappyRenderer.SCORE_9, (img) => {
 			this.score_digits[9] = img;
 		});
+		this.digits = 1;
 		this.groundX = 0;
 	}
 
@@ -188,13 +193,15 @@ class FlappyRenderer {
 	}
 
 	private renderScore(score) {
-		var digits = 0;
+		var digits_seen = 0;
 		while (score >= 1) {
+			var digit_width = FlappyRenderer.SCORE_WIDTH * this.digits + FlappyRenderer.DIGIT_GAP * (this.digits - 1);
+			var right = Constants.GAME_WIDTH / 2 + digit_width / 2;
 			this.canvas.add(new fabric.Image(this.score_digits[score % 10], {
-				left: Constants.GAME_WIDTH / 2 - digits * 30,
-				top: Constants.GAME_HEIGHT / 2 - 50,
+				left: right - FlappyRenderer.SCORE_WIDTH - digits_seen * (FlappyRenderer.SCORE_WIDTH + FlappyRenderer.DIGIT_GAP),
+				top: Constants.GAME_HEIGHT / 2 - FlappyRenderer.SCORE_HEIGHT / 2,
 			}));
-			digits++;
+			digits_seen++;
 			score = Math.floor(score / 10);
 		}
 	}
@@ -231,7 +238,11 @@ class FlappyRenderer {
 		this.renderGround();
 
 		// draw score
-		this.renderScore(Math.round(state.score));
+		var score = Math.round(state.score);
+		if (Math.floor(score / Math.pow(10, this.digits)) > 0) {
+			this.digits++;
+		}
+		this.renderScore(Math.round(score));
 	}
 }
 
