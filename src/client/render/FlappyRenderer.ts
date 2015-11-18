@@ -30,6 +30,23 @@ class FlappyRenderer {
 	private static IMG_BIRD = 'assets/bird.png';
 	private bird;
 
+	// score
+	private static SCORE_WIDTH = 24;
+	private static SCORE_HEIGHT = 36;
+	private static DIGIT_GAP = 2;
+	private static SCORE_0 = 'assets/font_big_0.png';
+	private static SCORE_1 = 'assets/font_big_1.png';
+	private static SCORE_2 = 'assets/font_big_2.png';
+	private static SCORE_3 = 'assets/font_big_3.png';
+	private static SCORE_4 = 'assets/font_big_4.png';
+	private static SCORE_5 = 'assets/font_big_5.png';
+	private static SCORE_6 = 'assets/font_big_6.png';
+	private static SCORE_7 = 'assets/font_big_7.png';
+	private static SCORE_8 = 'assets/font_big_8.png';
+	private static SCORE_9 = 'assets/font_big_9.png';
+	private score_digits = [];
+	private digits;  // keep track of how many digits we have for placement
+
 	private sim: FlappySimulator;
 
 	private canvas;
@@ -63,6 +80,38 @@ class FlappyRenderer {
 		fabric.util.loadImage(FlappyRenderer.IMG_BIRD, (img) => {
 			this.bird = img;
 		});
+		// for some reason it doesn't like it when I load this in a loop
+		fabric.util.loadImage(FlappyRenderer.SCORE_0, (img) => {
+			this.score_digits[0] = img;
+		});
+		fabric.util.loadImage(FlappyRenderer.SCORE_1, (img) => {
+			this.score_digits[1] = img;
+		});
+		fabric.util.loadImage(FlappyRenderer.SCORE_2, (img) => {
+			this.score_digits[2] = img;
+		});
+		fabric.util.loadImage(FlappyRenderer.SCORE_3, (img) => {
+			this.score_digits[3] = img;
+		});
+		fabric.util.loadImage(FlappyRenderer.SCORE_4, (img) => {
+			this.score_digits[4] = img;
+		});
+		fabric.util.loadImage(FlappyRenderer.SCORE_5, (img) => {
+			this.score_digits[5] = img;
+		});
+		fabric.util.loadImage(FlappyRenderer.SCORE_6, (img) => {
+			this.score_digits[6] = img;
+		});
+		fabric.util.loadImage(FlappyRenderer.SCORE_7, (img) => {
+			this.score_digits[7] = img;
+		});
+		fabric.util.loadImage(FlappyRenderer.SCORE_8, (img) => {
+			this.score_digits[8] = img;
+		});
+		fabric.util.loadImage(FlappyRenderer.SCORE_9, (img) => {
+			this.score_digits[9] = img;
+		});
+		this.digits = 1;
 		this.groundX = 0;
 	}
 
@@ -143,6 +192,20 @@ class FlappyRenderer {
 		}));
 	}
 
+	private renderScore(score) {
+		var digits_seen = 0;
+		while (score >= 1) {
+			var digit_width = FlappyRenderer.SCORE_WIDTH * this.digits + FlappyRenderer.DIGIT_GAP * (this.digits - 1);
+			var right = Constants.GAME_WIDTH / 2 + digit_width / 2;
+			this.canvas.add(new fabric.Image(this.score_digits[score % 10], {
+				left: right - FlappyRenderer.SCORE_WIDTH - digits_seen * (FlappyRenderer.SCORE_WIDTH + FlappyRenderer.DIGIT_GAP),
+				top: Constants.GAME_HEIGHT / 2 - FlappyRenderer.SCORE_HEIGHT / 2,
+			}));
+			digits_seen++;
+			score = Math.floor(score / 10);
+		}
+	}
+
 	public render() {
 		// Clear the canvas
 		this.canvas.clear();
@@ -173,6 +236,13 @@ class FlappyRenderer {
 
 		// draw ground
 		this.renderGround();
+
+		// draw score
+		var score = Math.round(state.score);
+		if (Math.floor(score / Math.pow(10, this.digits)) > 0) {
+			this.digits++;
+		}
+		this.renderScore(Math.round(score));
 	}
 }
 
