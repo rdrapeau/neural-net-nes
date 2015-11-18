@@ -4,7 +4,7 @@ import Constants = require('../flappybird/Constants');
 export = {
    "brain": {
       "tdtrainer_options": {
-         "learning_rate": 0.001,
+         "learning_rate": 0.01,
          "momentum": 0.0,
          "batch_size": 64,
          "l2_decay": 0.01
@@ -19,7 +19,7 @@ export = {
       "epsilon_test_time": 0.05
    },
    "featureCount" : 2,
-   "framesPerTick" : 6,
+   "framesPerTick" : 8,
 
    "features": function(state) {
       var bird = state.bird;
