@@ -7,19 +7,21 @@ var Brain = require('../common/Brain');
 
 var fs = require('fs');
 
-var flappySimulator = new FlappySimulator();
-var flappyAdapter = new FlappyAdapter(flappySimulator);
-
-var brain = new Brain(flappyAdapter);
-
-if (process.argv.length < 2) {
+if (process.argv.length < 4) {
 	throw 'Invalid number of arguments';
 }
 
-var file = process.argv[2] || null;
+var parameterFile = process.argv[2];
+var outFile = process.argv[3];
+var Parameters = require(parameterFile);
+
+var flappySimulator = new FlappySimulator();
+var flappyAdapter = new FlappyAdapter(flappySimulator, Parameters);
+var brain = new Brain(flappyAdapter);
 
 var count = 0;
 var flappyDQNTimer = new FlappyDQNTimer(
+	Parameters.framesPerTick,
 	flappySimulator,
 	flappyAdapter,
 	() => {
@@ -31,19 +33,18 @@ var flappyDQNTimer = new FlappyDQNTimer(
 	}
 );
 
-
 var n : number = flappyAdapter.getTargetIterations();
-for (var i = 0; i < n * FlappyDQNTimer.FRAMES_PER_TICK; i++) {
+while (brain.brain.age < n) {
 	flappyDQNTimer.frame();
 }
 
-if (file) {
-	fs.writeFile(file, JSON.stringify(brain.getBrainJSON()), function(err) {
+if (outFile) {
+	fs.writeFile(outFile, JSON.stringify(brain.getBrainJSON()), function(err) {
 	    if (err) {
 	        return console.log(err);
 	    }
 
-	    console.log("The Brain was saved to " + file);
+		console.log("The Brain was saved to " + outFile);
 	}); 
 } else {
 	console.log(JSON.stringify(brain.getBrainJSON()));

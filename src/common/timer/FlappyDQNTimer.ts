@@ -7,21 +7,22 @@ import Timer = require('./Timer');
  * for flappybird is ticked
  */
 class FlappyDQNTimer extends Timer {
-	public static FRAMES_PER_TICK = 6;
-
 	private flappySimulator;
 	private flappyAdapter;
 	private frameCount;
+    private framesPerTick;
 
     private onGameOver: Function;
 
     constructor(
+        framesPerTick : number,
         flappySimulator: FlappySimulator,
         flappyAdapter: FlappyAdapter,
         onTick: Function,
         onGameOver?: Function
     ) {
 		super(onTick);
+        this.framesPerTick = framesPerTick;
 		this.frameCount = 0;
         this.flappySimulator = flappySimulator;
         this.flappyAdapter = flappyAdapter;
@@ -53,7 +54,7 @@ class FlappyDQNTimer extends Timer {
 
         // Update our brain if we have ticked over a threshold,
         // have died, or have scored.
-        if (this.frameCount > FlappyDQNTimer.FRAMES_PER_TICK ||
+        if (this.frameCount > this.framesPerTick ||
             this.flappySimulator.isDead() ||
             scored) {
             if (this.flappySimulator.isRunning()) {

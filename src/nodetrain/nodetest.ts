@@ -7,21 +7,19 @@ var Brain = require('../common/Brain');
 
 var fs = require('fs');
 
-var flappySimulator = new FlappySimulator();
-var flappyAdapter = new FlappyAdapter(flappySimulator);
-
-var brain = new Brain(flappyAdapter);
-
-if (process.argv.length < 2) {
+if (process.argv.length < 4) {
 	throw 'Invalid number of arguments';
 }
 
-var file = process.argv[2] || null;
+var parameterFile = process.argv[2];
+var inFile = process.argv[3];
+var brainString = fs.readFileSync(inFile);
+var Parameters = require(parameterFile);
 
-console.log('Loading ' + file);
-var brainString = fs.readFileSync(file);
+var flappySimulator = new FlappySimulator();
+var flappyAdapter = new FlappyAdapter(flappySimulator, Parameters);
+var brain = new Brain(flappyAdapter);
 brain.loadBrain(JSON.parse(brainString));
-console.log('Loaded');
 
 var maxScore = -1;
 var minScore = 99999999999999;
@@ -29,6 +27,7 @@ var scoreSum = 0;
 var gameCount = 0;
 
 var flappyDQNTimer = new FlappyDQNTimer(
+	Parameters.framesPerTick,
 	flappySimulator,
 	flappyAdapter,
 	() => {

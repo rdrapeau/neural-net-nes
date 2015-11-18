@@ -5,6 +5,7 @@ var FlappyRenderer = require('../render/FlappyRenderer');
 var FlappyAdapter = require('../../common/adapter/FlappyAdapter');
 var FlappyDQNTimer = require('../../common/timer/FlappyDQNTimer');
 
+var Parameters = require('../../common/parameters/35x35-1m');
 var RENDER_FPS = 60.0;
 
 var FlappyComponent = React.createClass({
@@ -28,8 +29,9 @@ var FlappyComponent = React.createClass({
     componentDidMount : function() {
         this.flappySimulator = new FlappySimulator();
         this.flappyRenderer = new FlappyRenderer(this.flappySimulator, "flappyCanvas");
-        this.flappyAdapter = new FlappyAdapter(this.flappySimulator);
+        this.flappyAdapter = new FlappyAdapter(this.flappySimulator, Parameters);
         this.flappyDQNTimer = new FlappyDQNTimer(
+            Parameters.framesPerTick,
             this.flappySimulator,
             this.flappyAdapter,
             this.props.onTick
