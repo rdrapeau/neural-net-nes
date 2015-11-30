@@ -72,14 +72,14 @@ class FlappySimulator {
 
 
 		var halfGap = Math.floor(Pipe.Y_GAP_WIDTH / 2);
-        for (var y: number = 0; y < downSampledWidth; y++) {
-            screen[y] = [];
+        for (var y: number = 0; y < downSampledHeight; y++) {
+            screen.push([]);
             for (var x: number = 0; x < downSampledWidth; x++) {
 				var centerX = pixelSkip * x;
 				var centerY = pixelSkip * y;
 
                 // Initially set to blank
-				screen[y][x] = Constants.EMPTY_SPACE;
+				screen[y].push(Constants.EMPTY_SPACE);
 
                 // Check if this pixel is in bounds of the bird
                 if (centerX > this.bird.x && centerX < this.bird.x + Bird.BIRD_WIDTH &&

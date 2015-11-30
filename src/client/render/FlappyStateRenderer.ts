@@ -16,6 +16,8 @@ class FlappyStateRenderer {
 		var canvasElem = <HTMLCanvasElement> document.getElementById(domId);
 		this.width = Math.round(Constants.GAME_WIDTH * Constants.DOWN_SAMPLE_RATIO);
 		this.height = Math.round(Constants.GAME_HEIGHT * Constants.DOWN_SAMPLE_RATIO);
+		canvasElem.width = this.width;
+		canvasElem.height = this.height;
 
 		this.ctx = canvasElem.getContext('2d');
 		this.imgData = this.ctx.createImageData(this.width, this.height); // width x height
@@ -31,8 +33,8 @@ class FlappyStateRenderer {
 		if (!state) return;
 
 		// convert the game state screen to ImageData
-		for (var y = 0; y < this.width; y++) {
-			for (var x = 0; x < this.height; x++) {
+		for (var y = 0; y < this.height; y++) {
+			for (var x = 0; x < this.width; x++) {
 				this.imgData.data[(y * (this.width) + x) * 4] = 300 - state.screen[y][x] * 200;
 				this.imgData.data[(y * (this.width) + x) * 4 + 1] = 300 - state.screen[y][x] * 200;
 				this.imgData.data[(y * (this.width) + x) * 4 + 2] = 300 - state.screen[y][x] * 200;
