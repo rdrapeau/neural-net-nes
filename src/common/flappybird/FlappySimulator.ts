@@ -66,55 +66,41 @@ class FlappySimulator {
     private getScreenState() {
         // create full matrix of blank space (0)
         var screen = [];
-        for (var y : number = 0; y < Constants.GAME_HEIGHT; y++) {
-            screen[y] = [];
-            for (var x : number = 0; x < Constants.GAME_WIDTH; x++) {
-                screen[y][x] = Constants.EMPTY_SPACE;
-            }
-        }
-
-        // Populate where the bird is
-        for (var x : number = Math.floor(this.bird.x); x < this.bird.x + Bird.BIRD_WIDTH; x++) {
-            for (var y : number = Math.floor(this.bird.y); y < this.bird.y + Bird.BIRD_HEIGHT; y++) {
-                screen[y][x] = Constants.BIRD_SPACE;
-            }
-        }
-
-        // // Populate where the pipes are
-        var halfGap = Pipe.Y_GAP_WIDTH / 2;
-        for (var pipe_num = 0; pipe_num < this.pipes.length; pipe_num++) {
-            var pipe = this.pipes[pipe_num];
-            for (var x : number = Math.floor(pipe.x); x < pipe.x + Pipe.PIPE_WIDTH; x++) {
-                // Bottom half of the pipe
-                for (var y : number = Math.floor(pipe.y + halfGap); y < Constants.GAME_HEIGHT; y++) {
-                    screen[y][x] = Constants.PIPE_SPACE;
-                }
-
-                // Top half of the pipe
-                for (var y : number = Math.floor(pipe.y - halfGap); y > 0; y--) {
-                    screen[y][x] = Constants.PIPE_SPACE;
-                }
-            }
-        }
-
-        // Downsample it by taking every nth pixel
-        var downSampledScreen = [];
         var downSampledWidth = Math.round(Constants.DOWN_SAMPLE_RATIO * Constants.GAME_WIDTH);
         var downSampledHeight = Math.round(Constants.DOWN_SAMPLE_RATIO * Constants.GAME_HEIGHT);
         var pixelSkip = Math.floor(1 / (Constants.DOWN_SAMPLE_RATIO));
 
-        for (var y: number = 0; y < downSampledHeight; y++) {
-            downSampledScreen[y] = [];
+
+		var halfGap = Math.floor(Pipe.Y_GAP_WIDTH / 2);
+        for (var y: number = 0; y < downSampledWidth; y++) {
+            screen[y] = [];
             for (var x: number = 0; x < downSampledWidth; x++) {
 				var centerX = pixelSkip * x;
 				var centerY = pixelSkip * y;
 
-                downSampledScreen[y][x] = screen[centerY][centerX];
+                // Initially set to blank
+				screen[y][x] = Constants.EMPTY_SPACE;
+
+                // Check if this pixel is in bounds of the bird
+                if (centerX > this.bird.x && centerX < this.bird.x + Bird.BIRD_WIDTH &&
+                	centerY > this.bird.y && centerY < this.bird.y + Bird.BIRD_HEIGHT) {
+                	// Bird, set it to bird
+					screen[y][x] = Constants.BIRD_SPACE;
+					continue;
+                }
+
+                for (var i = 0; i < this.pipes.length; i++) {
+					var pipe = this.pipes[i];
+                	if (centerX > pipe.x && centerX < pipe.x + Pipe.PIPE_WIDTH &&
+                		(centerY > pipe.y + halfGap || centerY < pipe.y - halfGap)) {
+						screen[y][x] = Constants.PIPE_SPACE;
+						break;
+                	}
+                }
             }
         }
 
-
-        return downSampledScreen;
+        return screen;
     }
 
 	public update() {
