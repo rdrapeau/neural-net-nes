@@ -6,20 +6,24 @@ class FlappyStateRenderer {
 
 	private ctx;  // 2d canvas context
 	private imgData;
+	private width;
+	private height;
 
 	constructor(simulator: FlappySimulator, domId: string) {
 		this.sim = simulator;
 
 		// Construct canvas in dom element
 		var canvasElem = <HTMLCanvasElement> document.getElementById(domId);
+		this.width = Math.round(Constants.GAME_WIDTH * Constants.DOWN_SAMPLE_RATIO);
+		this.height = Math.round(Constants.GAME_HEIGHT * Constants.DOWN_SAMPLE_RATIO);
 
 		this.ctx = canvasElem.getContext('2d');
-		this.imgData = this.ctx.createImageData(Constants.GAME_WIDTH, Constants.GAME_HEIGHT); // width x height
+		this.imgData = this.ctx.createImageData(this.width, this.height); // width x height
 	}
 
 	public renderState() {
 		// Clear the canvas
-		this.ctx.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+		this.ctx.clearRect(0, 0, this.width, this.height);
 
 		var state = this.sim.onGetState();
 		
@@ -27,12 +31,12 @@ class FlappyStateRenderer {
 		if (!state) return;
 
 		// convert the game state screen to ImageData
-		for (var y = 0; y < Constants.GAME_HEIGHT; y++) {
-			for (var x = 0; x < Constants.GAME_WIDTH; x++) {
-				this.imgData.data[(y * (Constants.GAME_WIDTH) + x) * 4] = 300 - state.screen[y][x] * 200;
-				this.imgData.data[(y * (Constants.GAME_WIDTH) + x) * 4 + 1] = 300 - state.screen[y][x] * 200;
-				this.imgData.data[(y * (Constants.GAME_WIDTH) + x) * 4 + 2] = 300 - state.screen[y][x] * 200;
-				this.imgData.data[(y * (Constants.GAME_WIDTH) + x) * 4 + 3] = 255; // opacity
+		for (var y = 0; y < this.width; y++) {
+			for (var x = 0; x < this.height; x++) {
+				this.imgData.data[(y * (this.width) + x) * 4] = 300 - state.screen[y][x] * 200;
+				this.imgData.data[(y * (this.width) + x) * 4 + 1] = 300 - state.screen[y][x] * 200;
+				this.imgData.data[(y * (this.width) + x) * 4 + 2] = 300 - state.screen[y][x] * 200;
+				this.imgData.data[(y * (this.width) + x) * 4 + 3] = 255; // opacity
 			}
 		}
 		// now we can draw our imagedata onto the canvas

@@ -97,7 +97,24 @@ class FlappySimulator {
             }
         }
 
-        return screen;
+        // Downsample it by taking every nth pixel
+        var downSampledScreen = [];
+        var downSampledWidth = Math.round(Constants.DOWN_SAMPLE_RATIO * Constants.GAME_WIDTH);
+        var downSampledHeight = Math.round(Constants.DOWN_SAMPLE_RATIO * Constants.GAME_HEIGHT);
+        var pixelSkip = Math.floor(1 / (Constants.DOWN_SAMPLE_RATIO));
+
+        for (var y: number = 0; y < downSampledHeight; y++) {
+            downSampledScreen[y] = [];
+            for (var x: number = 0; x < downSampledWidth; x++) {
+				var centerX = pixelSkip * x;
+				var centerY = pixelSkip * y;
+
+                downSampledScreen[y][x] = screen[centerY][centerX];
+            }
+        }
+
+
+        return downSampledScreen;
     }
 
 	public update() {
