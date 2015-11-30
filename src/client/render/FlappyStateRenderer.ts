@@ -33,13 +33,11 @@ class FlappyStateRenderer {
 		if (!state) return;
 
 		// convert the game state screen to ImageData
-		for (var y = 0; y < this.height; y++) {
-			for (var x = 0; x < this.width; x++) {
-				this.imgData.data[(y * (this.width) + x) * 4] = 300 - state.screen[y][x] * 200;
-				this.imgData.data[(y * (this.width) + x) * 4 + 1] = 300 - state.screen[y][x] * 200;
-				this.imgData.data[(y * (this.width) + x) * 4 + 2] = 300 - state.screen[y][x] * 200;
-				this.imgData.data[(y * (this.width) + x) * 4 + 3] = 255; // opacity
-			}
+		for (var i = 0; i < this.height * this.width; i++) {
+			this.imgData.data[i * 4] = 300 - state.screen[i] * 200;
+			this.imgData.data[i * 4 + 1] = 300 - state.screen[i] * 200;
+			this.imgData.data[i * 4 + 2] = 300 - state.screen[i] * 200;
+			this.imgData.data[i * 4 + 3] = 255; // opacity
 		}
 		// now we can draw our imagedata onto the canvas
 		this.ctx.putImageData(this.imgData, 0, 0);
