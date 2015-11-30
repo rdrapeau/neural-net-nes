@@ -1,0 +1,7 @@
+button {
+	display: block;
+}
+
+.canvas-container {
+	display: inline-block;
+}

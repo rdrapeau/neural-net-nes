@@ -2,6 +2,7 @@ var React = require('react');
 var Constants = require('../../common/flappybird/Constants');
 var FlappySimulator = require('../../common/flappybird/FlappySimulator');
 var FlappyRenderer = require('../render/FlappyRenderer');
+var FlappyStateRenderer = require('../render/FlappyStateRenderer');
 var FlappyAdapter = require('../../common/adapter/FlappyAdapter');
 var FlappyDQNTimer = require('../../common/timer/FlappyDQNTimer');
 
@@ -11,6 +12,7 @@ var RENDER_FPS = 60.0;
 var FlappyComponent = React.createClass({
     flappySimulator : null,
     flappyRenderer : null,
+    flappyStateRenderer : null,
     flappyAdapter : null,
     flappyDQNTimer : null,
 
@@ -29,6 +31,7 @@ var FlappyComponent = React.createClass({
     componentDidMount : function() {
         this.flappySimulator = new FlappySimulator();
         this.flappyRenderer = new FlappyRenderer(this.flappySimulator, "flappyCanvas");
+        this.flappyStateRenderer = new FlappyStateRenderer(this.flappySimulator, "flappyStateCanvas");
         this.flappyAdapter = new FlappyAdapter(this.flappySimulator, Parameters);
         this.flappyDQNTimer = new FlappyDQNTimer(
             Parameters.framesPerTick,
@@ -57,6 +60,7 @@ var FlappyComponent = React.createClass({
             // Render
             if (this.state.renderEnabled) {
                 this.flappyRenderer.render();
+                this.flappyStateRenderer.renderState();
             }
         }
 
@@ -79,6 +83,7 @@ var FlappyComponent = React.createClass({
                     {this.state.renderEnabled ? "Rendering: On" : "Rendering: Off"}
                 </button>
                 <canvas id="flappyCanvas" width={"" + Constants.GAME_WIDTH} height={"" + Constants.GAME_HEIGHT} />
+                <canvas id="flappyStateCanvas" width={"" + Constants.GAME_WIDTH} height={"" + Constants.GAME_HEIGHT} />
             </div>
         );
 	}
