@@ -1,3 +1,4 @@
+import Constants = require('./Constants');
 import Bird = require('./Bird');
 import Pipe = require('./Pipe');
 
@@ -57,9 +58,47 @@ class FlappySimulator {
 			},
 			frames : this.frames,
 			score : this.score,
-			dead : this.died
+			dead : this.died,
+            screen : this.getScreenState()
 		} : null;
 	}
+
+    private getScreenState() {
+        // create full matrix of blank space (0)
+        var screen = [];
+        for (var y : number = 0; y < Constants.GAME_HEIGHT; y++) {
+            screen[y] = [];
+            for (var x : number = 0; x < Constants.GAME_WIDTH; x++) {
+                screen[y][x] = Constants.EMPTY_SPACE;
+            }
+        }
+
+        // Populate where the bird is
+        for (var x : number = Math.floor(this.bird.x); x < this.bird.x + Bird.BIRD_WIDTH; x++) {
+            for (var y : number = Math.floor(this.bird.y); y < this.bird.y + Bird.BIRD_HEIGHT; y++) {
+                screen[y][x] = Constants.BIRD_SPACE;
+            }
+        }
+
+        // // Populate where the pipes are
+        var halfGap = Pipe.Y_GAP_WIDTH / 2;
+        for (var pipe_num = 0; pipe_num < this.pipes.length; pipe_num++) {
+            var pipe = this.pipes[pipe_num];
+            for (var x : number = Math.floor(pipe.x); x < pipe.x + Pipe.PIPE_WIDTH; x++) {
+                // Bottom half of the pipe
+                for (var y : number = Math.floor(pipe.y + halfGap); y < Constants.GAME_HEIGHT; y++) {
+                    screen[y][x] = Constants.PIPE_SPACE;
+                }
+
+                // Top half of the pipe
+                for (var y : number = Math.floor(pipe.y - halfGap); y > 0; y--) {
+                    screen[y][x] = Constants.PIPE_SPACE;
+                }
+            }
+        }
+
+        return screen;
+    }
 
 	public update() {
 		if (!this.started) {
