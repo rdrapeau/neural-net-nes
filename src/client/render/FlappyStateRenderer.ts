@@ -15,7 +15,7 @@ class FlappyStateRenderer {
 		// Construct canvas in dom element
 		var canvasElem = <HTMLCanvasElement> document.getElementById(domId);
 		this.width = Math.round(Constants.GAME_WIDTH * Constants.DOWN_SAMPLE_RATIO);
-		this.height = Math.round(Constants.GAME_HEIGHT * Constants.DOWN_SAMPLE_RATIO);
+		this.height = Math.round((Constants.GAME_HEIGHT - Constants.GROUND_HEIGHT) * Constants.DOWN_SAMPLE_RATIO);
 		canvasElem.width = this.width;
 		canvasElem.height = this.height;
 

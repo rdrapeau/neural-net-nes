@@ -64,28 +64,30 @@ class FlappySimulator {
 	}
 
     private getScreenState() {
-        // create full matrix of blank space (0)
-        var screen = [];
+    	// Down sample screen by skipping pixels (fast, but not aliased)
         var downSampledWidth = Math.round(Constants.DOWN_SAMPLE_RATIO * Constants.GAME_WIDTH);
-        var downSampledHeight = Math.round(Constants.DOWN_SAMPLE_RATIO * Constants.GAME_HEIGHT);
+        var downSampledHeight =
+        	Math.round(Constants.DOWN_SAMPLE_RATIO * (Constants.GAME_HEIGHT - Constants.GROUND_HEIGHT));
         var pixelSkip = Math.floor(1 / (Constants.DOWN_SAMPLE_RATIO));
 
+		var screen = new Array(downSampledHeight * downSampledWidth);
 
 		var halfGap = Math.floor(Pipe.Y_GAP_WIDTH / 2);
         for (var y: number = 0; y < downSampledHeight; y++) {
-            screen.push([]);
             for (var x: number = 0; x < downSampledWidth; x++) {
 				var centerX = pixelSkip * x;
 				var centerY = pixelSkip * y;
 
+				var index = y * downSampledWidth + x;
+
                 // Initially set to blank
-				screen[y].push(Constants.EMPTY_SPACE);
+				screen[index] = Constants.EMPTY_SPACE;
 
                 // Check if this pixel is in bounds of the bird
                 if (centerX > this.bird.x && centerX < this.bird.x + Bird.BIRD_WIDTH &&
                 	centerY > this.bird.y && centerY < this.bird.y + Bird.BIRD_HEIGHT) {
                 	// Bird, set it to bird
-					screen[y][x] = Constants.BIRD_SPACE;
+					screen[index] = Constants.BIRD_SPACE;
 					continue;
                 }
 
@@ -93,7 +95,7 @@ class FlappySimulator {
 					var pipe = this.pipes[i];
                 	if (centerX > pipe.x && centerX < pipe.x + Pipe.PIPE_WIDTH &&
                 		(centerY > pipe.y + halfGap || centerY < pipe.y - halfGap)) {
-						screen[y][x] = Constants.PIPE_SPACE;
+						screen[index] = Constants.PIPE_SPACE;
 						break;
                 	}
                 }
