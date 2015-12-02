@@ -120,7 +120,13 @@ var deepqlearn = deepqlearn || { REVISION: 'ALPHA' };
     this.average_reward_window = new cnnutil.Window(1000, 10);
     this.average_loss_window = new cnnutil.Window(1000, 10);
     this.learning = true;
+
+    if (typeof opt.width !== 'undefined' && typeof opt.height !== 'undefined') {
+      this.width = opt.width;
+      this.height = opt.height;
+    }
   }
+
   Brain.prototype = {
     random_action: function() {
       // a bit of a helper function. It returns a random action
@@ -142,7 +148,12 @@ var deepqlearn = deepqlearn || { REVISION: 'ALPHA' };
     policy: function(s) {
       // compute the value of doing any action in this state
       // and return the argmax action and its value
-      var svol = new convnetjs.Vol(1, 1, this.net_inputs);
+      var svol;
+      if (this.width) {
+        svol = new convnetjs.Vol(this.width, this.height, this.temporal_window + 1);
+      } else {
+        svol = new convnetjs.Vol(1, 1, this.net_inputs);
+      }
       svol.w = s;
       var action_values = this.value_net.forward(svol);
       var maxk = 0;
@@ -153,21 +164,37 @@ var deepqlearn = deepqlearn || { REVISION: 'ALPHA' };
       return {action:maxk, value:maxval};
     },
     getNetInput: function(xt) {
-      // return s = (x,a,x,a,x,a,xt) state vector.
-      // It's a concatenation of last window_size (x,a) pairs and current state x
+      if (this.temporal_window === 0) {
+        return xt;
+      }
       var w = [];
-      w = w.concat(xt); // start with current state
-      // and now go backwards and append states and actions from history temporal_window times
-      var n = this.window_size;
-      for(var k=0;k<this.temporal_window;k++) {
-        // state
-        w = w.concat(this.state_window[n-1-k]);
-        // action, encoded as 1-of-k indicator vector. We scale it up a bit because
-        // we dont want weight regularization to undervalue this information, as it only exists once
-        var action1ofk = new Array(this.num_actions);
-        for(var q=0;q<this.num_actions;q++) action1ofk[q] = 0.0;
-        action1ofk[this.action_window[n-1-k]] = 1.0*this.num_states;
-        w = w.concat(action1ofk);
+      if (this.width) { 
+        w = new Array((this.temporal_window + 1) * this.width * this.height);
+        for (var y = 0; y < this.height; y++) {
+          for (var x = 0; x < this.width; x++) {
+            w[(y * this.height + x) * (this.temporal_window + 1)] = xt[y * this.height + x];
+            for (var k = 1; k <= this.temporal_window; k++) {
+              w[(y * this.height + x) * (this.temporal_window + 1) + k] = this.state_window[this.window_size-k][y * this.height + x];
+            }
+          }
+        }
+      } else {
+        // return s = (x,a,x,a,x,a,xt) state vector.
+        // It's a concatenation of last window_size (x,a) pairs and current state x
+
+        w = w.concat(xt); // start with current state
+        // and now go backwards and append states and actions from history temporal_window times
+        var n = this.window_size;
+        for(var k=0;k<this.temporal_window;k++) {
+          // state
+          w = w.concat(this.state_window[n-1-k]);
+          // action, encoded as 1-of-k indicator vector. We scale it up a bit because
+          // we dont want weight regularization to undervalue this information, as it only exists once
+          var action1ofk = new Array(this.num_actions);
+          for(var q=0;q<this.num_actions;q++) action1ofk[q] = 0.0;
+          action1ofk[this.action_window[n-1-k]] = 1.0*this.num_states;
+          w = w.concat(action1ofk);
+        }
       }
       return w;
     },
@@ -251,7 +278,12 @@ var deepqlearn = deepqlearn || { REVISION: 'ALPHA' };
         for(var k=0;k < this.tdtrainer.batch_size;k++) {
           var re = convnetjs.randi(0, this.experience.length);
           var e = this.experience[re];
-          var x = new convnetjs.Vol(1, 1, this.net_inputs);
+          var x;
+          if (this.width) {
+            x = new convnetjs.Vol(this.width, this.height, this.temporal_window + 1);
+          } else {
+            x = new convnetjs.Vol(1, 1, this.net_inputs);
+          } 
           x.w = e.state0;
           var maxact = this.policy(e.state1);
           var r = e.reward0 + this.gamma * maxact.value;
