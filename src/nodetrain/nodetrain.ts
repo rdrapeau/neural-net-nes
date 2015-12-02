@@ -26,7 +26,7 @@ var flappyDQNTimer = new FlappyDQNTimer(
 	flappyAdapter,
 	() => {
 		brain.train();
-		if (flappyDQNTimer.getTicks() > 5000 || flappyDQNTimer.getTicks() % 1000 === 0) {
+		if (flappyDQNTimer.getTicks() % 1000 === 0) {
 			console.log("Iteration: " + flappyDQNTimer.getTicks());
 			console.log("smooth - ish reward:" + brain.brain.average_reward_window.get_average());
 		}
