@@ -6,9 +6,20 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 17 Nov 2015 16:36:21 -0800</pubDate>
-    <lastBuildDate>Tue, 17 Nov 2015 16:36:21 -0800</lastBuildDate>
+    <pubDate>Tue, 01 Dec 2015 18:40:41 -0800</pubDate>
+    <lastBuildDate>Tue, 01 Dec 2015 18:40:41 -0800</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Midterm Slides</title>
+        <description>&lt;iframe src=&quot;https://docs.google.com/presentation/d/1iUG1su_l69cBXkpQ2xnd2DRn8rPZsPOkl8lN5y7xVZM/embed?start=false&amp;amp;loop=false&amp;amp;delayms=3000&quot; frameborder=&quot;0&quot; width=&quot;960&quot; height=&quot;569&quot; allowfullscreen=&quot;true&quot; mozallowfullscreen=&quot;true&quot; webkitallowfullscreen=&quot;true&quot;&gt;&lt;/iframe&gt;
+</description>
+        <pubDate>Fri, 20 Nov 2015 13:44:40 -0800</pubDate>
+        <link>/2015/11/20/midterm-slides.html</link>
+        <guid isPermaLink="true">/2015/11/20/midterm-slides.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>Teaching Flappy to Win</title>
