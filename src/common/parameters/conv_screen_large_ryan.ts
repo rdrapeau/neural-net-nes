@@ -3,7 +3,7 @@ import Constants = require('../flappybird/Constants');
 
 var width = Math.round(Constants.GAME_WIDTH * Constants.DOWN_SAMPLE_RATIO);
 var height = Math.round(Constants.DOWN_SAMPLE_RATIO * (Constants.GAME_HEIGHT - Constants.GROUND_HEIGHT));
-var temporal_window = 0;
+var temporal_window = 4;
 export = {
    "brain": {
       "tdtrainer_options": {
@@ -24,10 +24,11 @@ export = {
       "height": height,
       "layer_defs" : [
           { type: 'input', out_sx: width, out_sy: height, out_depth: temporal_window + 1 },
-          { type: 'conv', sx: 5, filters: 2, stride: 1, pad: 2, activation: 'relu' },
+          { type: 'conv', sx: 8, filters: 16, stride: 4, pad: 2, activation: 'relu' },
           { type: 'pool', sx: 4, stride: 4 },
-          { type: 'conv', sx: 5, filters: 4, stride: 1, pad: 2, activation: 'relu' },
+          { type: 'conv', sx: 4, filters: 32, stride: 2, pad: 2, activation: 'relu' },
           { type: 'pool', sx: 4, stride: 4 },
+          { type: 'fc', num_neurons: 100, activation: 'relu' },
           { type: 'regression', num_neurons: 2 }
       ]
    },
