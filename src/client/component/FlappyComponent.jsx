@@ -6,7 +6,7 @@ var FlappyStateRenderer = require('../render/FlappyStateRenderer');
 var FlappyAdapter = require('../../common/adapter/FlappyAdapter');
 var FlappyDQNTimer = require('../../common/timer/FlappyDQNTimer');
 
-var Parameters = require('../../common/parameters/conv_screen');
+var Parameters = require('../../common/parameters/conv_screen_large_0_temp_ryan');
 var RENDER_FPS = 60.0;
 
 var FlappyComponent = React.createClass({
