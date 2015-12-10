@@ -7,7 +7,7 @@ class Constants {
     public static EMPTY_SPACE = 0;
     public static BIRD_SPACE = 1;
     public static PIPE_SPACE = 2;
-    public static DOWN_SAMPLE_RATIO = 0.125;
+    public static DOWN_SAMPLE_RATIO = 0.05;
 }
 
 export = Constants;
