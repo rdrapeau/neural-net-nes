@@ -13,7 +13,7 @@ export = {
          "l2_decay": 0.01
       },
       "temporal_window": temporal_window,
-      "experience_size": 30000,
+      "experience_size": 20000,
       "start_learn_threshold": 10000,
       "gamma": 0.8,
       "learning_steps_total": 1000000,
@@ -24,9 +24,9 @@ export = {
       "height": height,
       "layer_defs" : [
           { type: 'input', out_sx: width, out_sy: height, out_depth: temporal_window + 1 },
-          { type: 'conv', sx: 8, filters: 16, stride: 4, pad: 2, activation: 'relu' },
+          { type: 'conv', sx: 8, filters: 8, stride: 4, pad: 2, activation: 'relu' },
           { type: 'pool', sx: 4, stride: 4 },
-          { type: 'conv', sx: 4, filters: 32, stride: 2, pad: 2, activation: 'relu' },
+          { type: 'conv', sx: 4, filters: 16, stride: 2, pad: 2, activation: 'relu' },
           { type: 'pool', sx: 4, stride: 4 },
           { type: 'fc', num_neurons: 30, activation: 'relu' },
           { type: 'fc', num_neurons: 30, activation: 'relu' },
