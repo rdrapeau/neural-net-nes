@@ -16,8 +16,8 @@ export = {
          "l2_decay": 0.01
       },
       "temporal_window": temporal_window,
-      "experience_size": 15000,
-      "start_learn_threshold": 5000,
+      "experience_size": 25000,
+      "start_learn_threshold": 20000,
       "gamma": 0.8,
       "learning_steps_total": 1000000,
       "learning_steps_burnin": 15000,
@@ -26,17 +26,17 @@ export = {
       "width": width,
       "height": height,
       "layer_defs" : [
-          { type: 'input', out_sx: width, out_sy: height, out_depth: temporal_window + 1 },
-          { type: 'conv', sx: 3, filters: 4, stride: 1, pad: 1, activation: 'relu' },
-		  { type: 'pool', sx: 4, stride: 4 },
-		  { type: 'conv', sx: 3, filters: 8, stride: 1, pad: 1, activation: 'relu' },
-		  { type: 'pool', sx: 4, stride: 4 },
-		  { type: 'fc', num_neurons: 20, activation: 'relu' },
-          { type: 'regression', num_neurons: 2 }
+         { type: 'input', out_sx: width, out_sy: height, out_depth: temporal_window + 1 },
+         { type: 'conv', sx: 3, filters: 4, stride: 1, pad: 1, activation: 'relu' },
+		   { type: 'pool', sx: 4, stride: 4 },
+		   { type: 'conv', sx: 3, filters: 8, stride: 1, pad: 1, activation: 'relu' },
+		   { type: 'pool', sx: 4, stride: 4 },
+		   { type: 'fc', num_neurons: 20, activation: 'relu' },
+         { type: 'regression', num_neurons: 2 }
       ]
    },
-   "featureCount" : 1840,
-   "framesPerTick" : 8,
+   "featureCount" : width * height,
+   "framesPerTick" : 5,
 
    "features": function(state) {
 	   return state.screen;
