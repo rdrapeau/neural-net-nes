@@ -25,7 +25,7 @@ var VisualizeLayersComponent = React.createClass({
     }
     var layers = [];
     for (var i=0; i < net.layers.length; i++) {
-      layers.push(<ActivationComponent layer={net.layers[i]} key={i}/>);
+      layers.push(<ActivationComponent layer={net.layers[i]} key={i} tick={this.props.tickCount} />);
     }
     return <div>{layers}</div>;
   },

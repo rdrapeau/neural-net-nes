@@ -7,10 +7,12 @@ var SCALE = 4;
 var FilterComponent = React.createClass({
 
   update: function(context) {
-    context.save();
+    if (this.props.tick % 4 !== 0) {
+      return;
+    }
     var maxmin = cnnutil.maxmin;
     var filter = this.props.filter;
-    var w = filter.w;
+    var w = this.props.grad ? filter.dw : filter.w;
     var mm = maxmin(w);
     var width = filter.sx * SCALE;
     var height = filter.sy * SCALE;
@@ -30,7 +32,6 @@ var FilterComponent = React.createClass({
       }
     }
     context.putImageData(g, 0, 0);
-    context.restore();
   },
 
   render : function() {
@@ -44,7 +45,6 @@ var FilterComponent = React.createClass({
 
   componentDidUpdate: function() {
     var context = this.getDOMNode().getContext('2d');
-    context.clearRect(0, 0, this.props.filter.sx * SCALE, this.props.filter.sy * SCALE);
     this.update(context);
   },
 });

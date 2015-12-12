@@ -7,6 +7,7 @@ var LayerComponent = React.createClass({
   render : function() {
     var layer = this.props.layer;
     var filters = this.getFilters(layer);
+    var filterGradients = this.getFilters(layer, true);
     return (
       <div>
         <span>Type: {layer.layer_type}    </span>
@@ -14,17 +15,18 @@ var LayerComponent = React.createClass({
         <span>out_sy: {layer.out_sy}    </span>
         <span>out_depth: {layer.out_depth}</span>
         {filters}
+        {filterGradients}
       </div>
     );
   },
 
-  getFilters : function(layer) {
+  getFilters : function(layer, grad) {
     if (layer.layer_type != 'conv') {
       return null;
     }
     var filters = [];
     for (var i = 0; i < layer.filters.length; i++) {
-      filters.push(<FilterComponent filter={layer.filters[i]} key={i} />);
+      filters.push(<FilterComponent filter={layer.filters[i]} grad={grad} key={i} tick={this.props.tick} />);
     }
     return <div>{filters}</div>;
   }
