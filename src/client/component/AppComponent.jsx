@@ -2,6 +2,7 @@ var React = require('react');
 var NESComponent = require('./NESComponent.jsx');
 var FlappyComponent = require('./FlappyComponent.jsx');
 var InfoComponent = require('./InfoComponent.jsx');
+var VisualizeLayersComponent = require('./VisualizeLayersComponent.jsx');
 var Brain = require('../../common/Brain');
 
 var AppComponent = React.createClass({
@@ -68,6 +69,9 @@ var AppComponent = React.createClass({
                 <FlappyComponent
                     onLoaded={this.onLoaded}
                     onTick={this.onTick} />
+                <VisualizeLayersComponent
+                    brain={this.brain}
+                    tickCount={this.state.trainTickCount} />
             </div>
         );
 	}
