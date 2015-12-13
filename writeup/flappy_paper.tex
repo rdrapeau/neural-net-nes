@@ -1,0 +1,104 @@
+\documentclass{chi2009}
+\usepackage{times}
+\usepackage{url}
+\usepackage{graphics}
+\usepackage{color}
+\usepackage[pdftex]{hyperref}
+\hypersetup{%
+pdftitle={TITLE GOES HERE},
+pdfauthor={Ryan Drapeau, Sonja Khan, Aaron Nech},
+pdfkeywords={KEYWORDS, GO, HERE},
+bookmarksnumbered,
+pdfstartview={FitH},
+colorlinks,
+citecolor=black,
+filecolor=black,
+linkcolor=black,
+urlcolor=black,
+breaklinks=true,
+}
+\newcommand{\comment}[1]{}
+\definecolor{Orange}{rgb}{1,0.5,0}
+\newcommand{\todo}[1]{\textsf{\textbf{\textcolor{Orange}{[[#1]]}}}}
+
+\pagenumbering{arabic}  % Arabic page numbers for submission.  Remove this line to eliminate page numbers for the camera ready copy
+
+\begin{document}
+% to make various LaTeX processors do the right thing with page size
+\special{papersize=8.5in,11in}
+\setlength{\paperheight}{11in}
+\setlength{\paperwidth}{8.5in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+% use this command to override the default ACM copyright statement
+% (e.g. for preprints). Remove for camera ready copy.
+\toappear{Submitted to CSE 571 (Fall '15) as the final paper.}
+
+\title{TITLE GOES HERE}
+\numberofauthors{3}
+\author{
+  \alignauthor Ryan Drapeau\\
+    \affaddr{University of Washington}\\
+    \email{drapeau@\footnotemark[1]}
+  \alignauthor Sonja Khan\\
+    \affaddr{University of Washington}\\
+    \email{sonjak3@\footnotemark[1]}
+  \alignauthor Aaron Nech\\
+    \affaddr{University of Washington}\\
+    \email{necha@\thanks{@cs.washington.edu}}
+}
+
+\maketitle
+
+\begin{abstract}
+Abstract goes here.
+\end{abstract}
+
+\keywords{KEYWORDS, GO, HERE}
+
+\section{Introduction}
+
+Intro goes here.
+
+\section{Related Work}
+
+Related work goes here.
+
+\section{Methods}
+
+Methods go here.
+
+\section{Results}
+
+% \begin{figure}[t]
+% \begin{center}
+% \includegraphics[width=\columnwidth]{figs/landingPage.png}
+% \vspace*{-0.25in}
+% \caption{CourseRatings landing page with the 3 search boxes.}
+% \label{fig:landing}
+% \end{center}
+% \end{figure}
+
+Results go here.
+
+\section{Discussion}
+
+Discussion goes here.
+
+\section{Future Work}
+
+Future work goes here.
+
+\section{Conclusion}
+
+Conclusion goes here.
+
+\section{Acknowledgments}
+
+Acknowledgement goes here.
+
+\bibliographystyle{abbrv}
+\bibliography{references}
+
+\end{document}
