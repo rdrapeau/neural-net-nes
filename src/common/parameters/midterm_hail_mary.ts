@@ -28,7 +28,8 @@ export = {
 
       return [
          Math.abs(pipe.x - bird.x) / Constants.GAME_WIDTH,
-         (bird.y - (Bird.BIRD_HEIGHT / 2) - pipe.y) / Constants.GAME_HEIGHT
+         (bird.y - (Bird.BIRD_HEIGHT / 2) - pipe.y) / Constants.GAME_HEIGHT,
+         bird.dy / Constants.GAME_HEIGHT
       ];
    },
 
