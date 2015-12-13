@@ -199,7 +199,7 @@ class FlappyRenderer {
 			var right = Constants.GAME_WIDTH / 2 + digit_width / 2;
 			this.canvas.add(new fabric.Image(this.score_digits[score % 10], {
 				left: right - FlappyRenderer.SCORE_WIDTH - digits_seen * (FlappyRenderer.SCORE_WIDTH + FlappyRenderer.DIGIT_GAP),
-				top: Constants.GAME_HEIGHT / 2 - FlappyRenderer.SCORE_HEIGHT / 2,
+				top: Constants.GAME_HEIGHT / 8 - FlappyRenderer.SCORE_HEIGHT / 2,
 			}));
 			digits_seen++;
 			score = Math.floor(score / 10);
